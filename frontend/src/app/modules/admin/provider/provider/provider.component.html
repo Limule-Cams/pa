@@ -1,0 +1,83 @@
+<div class="flex">
+  <app-sidebar></app-sidebar>
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Gestion des Prestataires</h1>
+
+    <div class="flex flex-col md:flex-row gap-4 mb-6">
+      <!-- Search Input -->
+      <input
+        type="text"
+        placeholder="Rechercher un prestataire ..."
+        class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5A4A7B] focus:border-[#5A4A7B]"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="updateSearchTerm($event)"
+      />
+
+      <!-- Active/Inactive Filters -->
+      <div class="flex items-center space-x-4">
+        <label class="inline-flex items-center">
+          <input
+            type="checkbox"
+            class="rounded border-gray-300 text-[#5A4A7B] focus:ring-[#5A4A7B]"
+            [ngModel]="showActive()"
+            (ngModelChange)="toggleActiveFilter($event)"
+            checked
+          >
+          <span class="ml-2 text-gray-700">Actifs</span>
+        </label>
+        <label class="inline-flex items-center">
+          <input
+            type="checkbox"
+            class="rounded border-gray-300 text-[#5A4A7B] focus:ring-[#5A4A7B]"
+            [ngModel]="showInactive()"
+            (ngModelChange)="toggleInactiveFilter($event)"
+            checked
+          >
+          <span class="ml-2 text-gray-700">Inactifs</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg border border-gray-200">
+      <table class="w-full">
+        <thead>
+        <tr class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Nom</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">SIRET</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Email</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Adresse</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">activity</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Statut</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+        <tr
+          [routerLink]="['/admin/providers', provider.user.id]"
+          class="hover:bg-gray-50 transition-colors" *ngFor="let provider of filteredProviders()">
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ provider.referenceName }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ provider.registryNumber }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600">{{ provider.user?.email }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ provider.address }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ provider.mainActivity ?? 'Non rensigé' }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span
+              [ngClass]="{
+                'bg-green-100 text-green-800': provider.user?.isActive,
+                'bg-red-100 text-red-800': !provider.user?.isActive
+              }"
+              class="px-2 py-1 text-xs font-medium rounded-full"
+            >
+              {{ provider.user?.isActive ? 'Actif' : 'Inactif' }}
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="filteredProviders().length === 0">
+          <td colspan="7" class="px-6 py-10 text-center text-gray-500">
+            {{ searchTerm() ? 'Aucun prestataire correspondant à votre recherche' : 'Aucun prestataire trouvé' }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

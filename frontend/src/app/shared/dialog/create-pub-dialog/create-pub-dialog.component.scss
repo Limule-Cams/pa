@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+}
+
+textarea {
+  resize: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(90, 74, 123, 0.1);
+  }
+}
+
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.image-preview-container {
+  position: relative;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.remove-image-btn {
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.character-counter {
+  transition: color 0.2s ease;
+}

@@ -1,0 +1,58 @@
+<div class="flex">
+  <app-sidebar></app-sidebar>
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Gestion des Événements</h1>
+
+    <div class="flex justify-between items-center mb-6">
+      <button (click)="OnCreateEvent()"
+              class="flex items-center gap-2 bg-[#5A4A7B] text-white px-6 py-3 rounded-lg hover:bg-[#483C63] transition-all duration-300 shadow-lg hover:shadow-xl">
+        <span>➕</span>
+        <span>Ajouter un événement</span>
+      </button>
+
+      <input type="text"
+             placeholder="Rechercher un événement..."
+             class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5A4A7B] focus:border-[#5A4A7B] transition-all duration-300" />
+    </div>
+
+    <div class="overflow-hidden bg-white shadow-lg rounded-xl border border-gray-100">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+          <tr>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-white tracking-wider">ID</th>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-white tracking-wider">Nom</th>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-white tracking-wider">Date</th>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-white tracking-wider">Statut</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          <tr
+            *ngFor="let event of eventsList()"
+            class="hover:bg-gray-50 transition-colors duration-150">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">EVT-{{ event.id }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <a
+                [href]="'admin/event/' + event.id"
+                class="text-sm font-medium text-[#5A4A7B] hover:text-[#8E6EBE] transition-colors duration-200 hover:underline">
+                {{ event.name }}
+              </a>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ event.startDate | date: 'dd/MM/YYYY' }} - {{ event.endDate | date: 'dd/MM/YYYY' }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+            <span
+              [class]="event.isActive
+                ? 'px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'
+                : 'px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800'">
+              {{ event.isActive ? 'Active' : 'Terminé' }}
+            </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

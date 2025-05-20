@@ -1,0 +1,59 @@
+<nav class="w-full bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+    <div class="flex justify-between items-center h-16">
+
+      <div class="flex-shrink-0 flex items-center">
+        <img src="../../../../../assets/logo2.png" alt="Logo de l'application" class="h-16 w-auto rounded-full" width="48" height="48">
+      </div>
+
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="flex space-x-2">
+          <a href="employer/home" class="bg-purple-950 text-white px-4 py-2 rounded-full shadow-md hover:bg-purple-700 transition duration-300 whitespace-nowrap flex items-center">
+            <i class="fas fa-home mr-2" aria-hidden="true"></i>
+            <span>{{ 'Acceuil' | translate }}</span>
+          </a>
+          <a href="employer/events" class="bg-purple-950 text-white px-4 py-2 rounded-full shadow-md hover:bg-purple-700 transition duration-300 whitespace-nowrap flex items-center">
+            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+            <span>{{ 'événements'| translate }}</span>
+          </a>
+          <a href="employer/services" class="bg-purple-950 text-white px-4 py-2 rounded-full shadow-md hover:bg-purple-700 transition duration-300 whitespace-nowrap flex items-center">
+            <i class="fas fa-concierge-bell mr-2" aria-hidden="true"></i>
+            <span>Services</span>
+          </a>
+          <a href="employer/advices" class="bg-purple-950 text-white px-4 py-2 rounded-full shadow-md hover:bg-purple-700 transition duration-300 whitespace-nowrap flex items-center">
+            <i class="fas fa-calendar-check mr-2" aria-hidden="true"></i>
+            <span>Conseils</span>
+          </a>
+          <a href="employer/blog" class="bg-purple-950 text-white px-4 py-2 rounded-full shadow-md hover:bg-purple-700 transition duration-300 whitespace-nowrap flex items-center">
+            <i class="fas fa-calendar-check mr-2" aria-hidden="true"></i>
+            <span>communauté</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-3 ml-4">
+        <div class="relative">
+          <select
+            [(ngModel)]="currentLanguage"
+            (change)="onLanguageChange()"
+            class="bg-white border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+          >
+            <option *ngFor="let lang of supportedLanguages" [value]="lang">
+              {{ lang === 'en' ? 'English' : 'Français' }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-3 ml-4">
+        <a
+          href="auth"
+          class="px-4 py-2 text-purple-950 border-2 border-purple-950 rounded-lg shadow hover:bg-purple-600 hover:text-white transition duration-300 font-medium cursor-pointer">
+          Déconnexion
+        </a>
+      </div>
+
+
+    </div>
+  </div>
+</nav>

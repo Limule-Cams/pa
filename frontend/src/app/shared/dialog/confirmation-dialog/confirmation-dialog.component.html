@@ -1,0 +1,23 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+  <!-- Dialog Container -->
+  <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+    <!-- Dialog Header -->
+    <div class="p-6">
+      <h3 class="text-lg font-semibold text-gray-900">{{ data.title }}</h3>
+      <p class="mt-2 text-gray-600">{{ data.message }}</p>
+    </div>
+
+    <div class="bg-gray-50 px-6 py-4 flex justify-end space-x-3 rounded-b-lg">
+      <button
+        (click)="onCancelClick()"
+        type="button" class="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md hover:bg-gray-100 transition-colors">
+        Cancel
+      </button>
+      <button
+        (click)="onConfirmClick()"
+        type="button" class="px-4 py-2 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition-colors">
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,347 @@
+@if (defaultForm === FormType.COMPANY) {
+  <div class="w-screen h-screen gradient-bg flex items-center justify-center relative">
+    <div class="absolute inset-0 bg-purple-950 opacity-50"></div>
+
+    <img src="../../../../../assets/font.png" alt="Logo" class="absolute top-0 left-0 w-full h-full object-cover z-0">
+
+    <div class="container mx-auto px-6 md:px-12 lg:px-24 flex flex-col md:flex-row items-center z-10">
+
+      <div class="absolute top-6 left-52">
+        <img src="../../../../../assets/logo2.png" alt="Logo" class="h-24">
+      </div>
+
+    <div class="md:w-1/2 p-8  ">
+      <h1 class="text-4xl md:text-5xl font-light text-white">Inscrivez votre <br> <span
+        class="font-bold text-pink-500">Entreprise</span></h1>
+      <p class="mt-10 text-lg text-white">Rejoignez notre plateforme pour gérer facilement votre entreprise, sécurisez vos
+        bénéfices et boostez vos opérations.</p>
+      <p class="mt-10 text-lg text-white">Si vous êtes un prestataire </p>
+
+      <button
+        (click)="onFormChange(FormType.PROVIDER)"
+        class="mt-6 px-6  py-3 bg-pink-500 text-white font-semibold rounded-full shadow-md hover:bg-pink-600 transition-all duration-300">
+        inscrivez-vous ici
+      </button>
+    </div>
+
+      <div class="w-full max-w-xl mx-auto p-10 rounded-3xl max-w-md w-full bg-opacity-90 bg-[#B5A7C0] shadow-xl">
+        <form class="space-y-6" [formGroup]="companyForm">
+          <div *ngIf="step === 1">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label for="companyName" class="text-white font-semibold text-lg">Nom de l'entreprise</label>
+                <input
+                  formControlName="companyName"
+                  type="text" id="companyName" placeholder="Ex: CareSync"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+
+              <div class="space-y-2">
+                <label for="ownerName" class="text-white font-semibold text-lg">Nom du propriétaire</label>
+                <input
+                  formControlName="companyOwner"
+                  type="text" id="ownerName" placeholder="Ex: Jean Dupont"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="space-y-2">
+                <label for="headquarters" class="text-white font-semibold text-lg">Siège social</label>
+                <input
+                  formControlName="address"
+                  type="text" id="headquarters" placeholder="Ex: 12 rue de Paris"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+
+              <div class="space-y-2">
+                <label for="siret" class="text-white font-semibold text-lg">Numéro SIRET</label>
+                <input
+                  formControlName="siret"
+                  type="text" id="siret" placeholder="Ex: 123 456 789 01234"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label for="companySize" class="text-white font-semibold text-lg">Taille de l'entreprise</label>
+              <select
+                formControlName="companySize"
+                id="companySize"
+                class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+                <option value="micro">Micro entreprise</option>
+                <option value="small">Petite entreprise</option>
+                <option value="medium">Entreprise moyenne</option>
+                <option value="large">Grande entreprise</option>
+              </select>
+            </div>
+
+            <button (click)="nextStep()"
+                    class="w-full py-4 bg-gradient-to-r from-[#E91E63] to-[#C2185B] hover:opacity-90 text-white font-bold uppercase tracking-wide rounded-full shadow-xl transition-transform transform hover:scale-105 duration-300 mt-8">
+              Suivant
+            </button>
+          </div>
+
+
+      @if (companyForm.dirty || !companyForm.untouched)
+          {
+            <span *ngIf="submitted && companyForm.get('companyName')?.hasError('required')" class="text-red-500 text-sm">
+  Nom de l'entreprise est requis.
+</span>
+
+            <span *ngIf="submitted && companyForm.get('companyOwner')?.hasError('required')" class="text-red-500 text-sm">
+  Nom du propriétaire est requis.
+</span>
+
+            <span *ngIf="submitted && companyForm.get('siret')?.hasError('required')" class="text-red-500 text-sm">
+  Numéro SIRET est requis.
+</span>
+
+            <span *ngIf="submitted && companyForm.get('siret')?.hasError('pattern')" class="text-red-500 text-sm">
+  Le SIRET doit contenir exactement 14 chiffres.
+</span>
+
+            <span *ngIf="submitted && companyForm.get('companySize')?.hasError('required')" class="text-red-500 text-sm">
+  Taille de l'entreprise est requise.
+</span>
+
+            <span *ngIf="submitted && companyForm.get('address')?.hasError('required')" class="text-red-500 text-sm">
+  Adresse est requise.
+</span>
+
+
+          }
+
+          <div *ngIf="step === 2">
+
+            <div class="grid grid-cols-1  gap-6">
+              <div class="space-y-4">
+                <label for="email" class="text-[#F6F4FD]">Adresse e-mail</label>
+                <input
+                  formControlName="email"
+                  type="email" id="email" placeholder="Ex: contact@abc.com"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+
+              <div class="space-y-4">
+                <label for="phone" class="text-[#F6F4FD]">Numéro de téléphone</label>
+                <input
+                  formControlName="phoneNumber"
+                  type="tel" id="phone" placeholder="Ex: +33 6 12 34 56 78"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="grid grid-cols-1  gap-6">
+                <div class="space-y-4">
+                  <label for="password" class="text-[#F6F4FD]">Mot de passe</label>
+                  <input
+                    formControlName="password"
+                    type="password" id="password" placeholder="Exemple: MonMotdepasse123"
+                    class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="flex justify-between mt-6">
+              <button (click)="prevStep()" class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow-md">
+                Précédent
+              </button >
+              <button (click)="registerCompanyClick()" type="button" class="bg-pink-600 text-white px-4 py-2 rounded-lg shadow-md">
+                S'inscrire
+              </button>
+
+
+
+            </div>
+
+
+            @if (companyForm.dirty || !companyForm.untouched)
+            {
+              <span *ngIf="submitted && companyForm.get('email')?.hasError('required')" class="text-red-500 text-sm">
+  L'email est requis.
+</span>
+
+              <span *ngIf="submitted && companyForm.get('email')?.hasError('email')" class="text-red-500 text-sm">
+  Format d'email invalide.
+</span>
+
+              <span *ngIf="submitted && companyForm.get('phoneNumber')?.hasError('required')" class="text-red-500 text-sm">
+  Le numéro de téléphone est requis.
+</span>
+
+              <span *ngIf="submitted && companyForm.get('password')?.hasError('required')" class="text-red-500 text-sm">
+  Le mot de passe est requis.
+</span>
+            }
+          </div>
+        </form>
+
+    </div>
+  </div>
+</div>
+} @else {
+
+  <div class="w-screen h-screen gradient-bg flex items-center justify-center relative">
+    <div class="absolute inset-0 bg-purple-950 opacity-50"></div>
+
+    <img src="../../../../../assets/font.png" alt="Logo" class="absolute top-0 left-0 w-full h-full object-cover z-0">
+
+    <div class="container mx-auto px-6 md:px-12 lg:px-24 flex flex-col md:flex-row items-center z-10">
+
+      <div class="absolute top-6 left-52">
+        <img src="../../../../../assets/logo2.png" alt="Logo" class="h-24">
+      </div>
+
+      <div class="md:w-1/2 p-8">
+        <h1 class="text-4xl md:text-5xl font-light text-white">Inscrivez votre <br> <span class="font-bold text-pink-500">Prestation</span></h1>
+        <p class="mt-10 text-lg text-white">Rejoignez notre plateforme pour proposer vos services, développer votre clientèle et gérer vos prestations de manière simple et efficace.</p>
+        <p class="mt-10 text-lg text-white">Si vous êtes une entrprise , inscrivez-vous ci-dessous.</p>
+
+        <button
+          (click)="onFormChange(FormType.COMPANY)"
+          class="mt-6 px-6 py-3 bg-pink-500 text-white font-semibold rounded-full shadow-md hover:bg-pink-600 transition-all duration-300">
+          Inscrivez-vous ici
+        </button>
+      </div>
+
+      <div class="w-full max-w-xl mx-auto p-10 rounded-3xl max-w-md w-full bg-opacity-90 bg-[#B5A7C0] shadow-xl">
+        <form class="space-y-6" [formGroup]="providerForm">
+          <div *ngIf="step === 1">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label for="companyName" class="text-[#F6F4FD]">Nom de votre entreprise</label>
+                <input
+                  formControlName="companyName"
+                  type="text" id="companyName" placeholder="Ex: CareSync"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+
+              <div class="space-y-2">
+                <label for="ownerName" class="text-[#F6F4FD]">Nom du prestataire</label>
+                <input
+                  formControlName="companyOwner"
+                  type="text" id="ownerName" placeholder="Ex: Jean Dupont"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6">
+              <div class="space-y-2">
+                <label for="headquarters" class="text-[#F6F4FD]">Lieu d'activité</label>
+                <input
+                  formControlName="address"
+                  type="text" id="headquarters" placeholder="Ex: 12 rue de Paris"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+
+              <div class="space-y-2">
+                <label for="services" class="text-[#F6F4FD]">Services proposés</label>
+                <textarea
+                  formControlName="services"
+                  id="services" placeholder="Ex: Consultation, Coaching, Réparation..."
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+
+                </textarea>
+              </div>
+            </div>
+
+            <button (click)="nextStep()"
+                    class="w-full py-4 bg-gradient-to-r from-[#E91E63] to-[#C2185B] text-[#F6F4FD] font-semibold uppercase tracking-wider rounded-full shadow-lg hover:opacity-90 transition-all duration-300 mt-8">
+              Suivant
+            </button>
+          </div>
+
+          @if (providerForm.dirty || !providerForm.untouched)
+          {
+            <span *ngIf="submitted && providerForm.get('companyName')?.hasError('required')" class="text-red-500 text-sm">
+  Nom de l'entreprise est requis.
+</span>
+
+            <span *ngIf="submitted && providerForm.get('companyOwner')?.hasError('required')" class="text-red-500 text-sm">
+  Nom du propriétaire est requis.
+</span>
+
+            <span *ngIf="submitted && providerForm.get('address')?.hasError('required')" class="text-red-500 text-sm">
+  L'address est requise.
+</span>
+
+
+            <span *ngIf="submitted && providerForm.get('services')?.hasError('required')" class="text-red-500 text-sm">
+  Les services sont requises.
+</span>
+
+
+          }
+
+          <div *ngIf="step === 2">
+            <div class="grid grid-cols-1 gap-6">
+              <div class="space-y-4">
+                <label for="email" class="text-[#F6F4FD]">Adresse e-mail</label>
+                <input
+                  formControlName="email"
+                  type="email" id="email" placeholder="Ex: contact@abc.com"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+
+              <div class="space-y-4">
+                <label for="phone" class="text-[#F6F4FD]">Numéro de téléphone</label>
+                <input
+                  formControlName="phoneNumber"
+                  type="tel" id="phone" placeholder="Ex: +33 6 12 34 56 78"
+                  class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="grid grid-cols-1 gap-6">
+                <div class="space-y-4">
+                  <label for="password" class="text-[#F6F4FD]">Mot de passe</label>
+                  <input
+                    formControlName="password"
+                    type="password" id="password" placeholder="Exemple: MonMotdepasse123"
+                    class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-6">
+              <button (click)="prevStep()" class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow-md">
+                Précédent
+              </button >
+              <button (click)="registerProviderClick()" class="bg-pink-600 text-white px-4 py-2 rounded-lg shadow-md">
+                S'inscrire
+              </button>
+
+              @if (providerForm.dirty || !providerForm.untouched)
+              {
+                <span *ngIf="submitted && providerForm.get('email')?.hasError('required')" class="text-red-500 text-sm">
+  L'email est requis.
+</span>
+
+                <span *ngIf="submitted && providerForm.get('email')?.hasError('email')" class="text-red-500 text-sm">
+  Format d'email invalide.
+</span>
+
+                <span *ngIf="submitted && providerForm.get('phoneNumber')?.hasError('required')" class="text-red-500 text-sm">
+  Le numéro de téléphone est requis.
+</span>
+
+                <span *ngIf="submitted && providerForm.get('password')?.hasError('required')" class="text-red-500 text-sm">
+  Le mot de passe est requis.
+</span>
+              }
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+
+    </div>
+  </div>
+
+    }
+

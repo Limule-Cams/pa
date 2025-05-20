@@ -1,0 +1,201 @@
+<div class="flex flex-col min-h-screen">
+    <app-navbare></app-navbare>
+
+  <div class="flex-grow pt-24 bg-gradient-to-br from-indigo-50 to-purple-50 overflow-hidden">    <div class="container mx-auto   px-4 sm:px-6 overflow-hidden">
+      <div class="flex flex-col lg:flex-row gap-6">
+
+        <div class="lg:w-2/3">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div>
+              <h1 class="text-3xl md:text-4xl font-bold text-purple-900 flex items-center">
+                <i class="fas fa-comment-dots mr-3 text-purple-900"></i>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-900">
+                Mur des Publications
+              </span>
+              </h1>
+              <p class="text-gray-600 mt-1 italic text-sm">Échangez, partagez et interagissez avec vos collègues</p>
+            </div>
+            <button (click)="openPostModal()"
+                    class="bg-gradient-to-r from-purple-400 to-purple-900 hover:from-purple-400 hover:to-purple-700
+                      text-white px-5 py-3 rounded-lg shadow-md transition transform hover:-translate-y-1
+                      flex items-center whitespace-nowrap font-medium">
+              <i class="fas fa-plus mr-2"></i> Nouvelle publication
+            </button>
+          </div>
+
+          <div class="space-y-6 overflow-y-auto" style="max-height: calc(100vh - 150px); padding-right: 10px;">
+            <div
+              *ngFor="let post of postsList()"
+              class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-purple-100">
+
+              <div class="p-5 pb-3">
+                <div class="flex justify-between items-start">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-900 flex items-center justify-center text-white font-bold text-lg">
+                      {{post.author.name.charAt(0)}}{{post.author.lastName.charAt(0)}}
+                    </div>
+                    <div>
+                      <p class="font-bold text-gray-800 text-lg">{{ post.author.name }} {{ post.author.lastName }}</p>
+                      <div class="flex items-center text-sm">
+                        <span class="text-purple-900 font-medium">{{ post.author.occupied_job }}</span>
+                        <span class="mx-1 text-gray-400">•</span>
+                        <span class="text-gray-500">{{ post.author.company.name }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="text-gray-400 hover:text-purple-900 p-1 rounded-full hover:bg-indigo-50 transition-colors">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="px-5 py-4">
+                <p class="text-gray-800 text-base leading-relaxed">{{ post.content }}</p>
+              </div>
+
+              <div class="px-5 pb-3 border-b border-gray-100">
+                <div class="flex justify-between items-center text-gray-500 text-sm">
+                <span class="flex items-center">
+                  <i class="far fa-comment mr-1 text-purple-900"></i>
+                  {{ post.comments.length }} commentaires
+                </span>
+                </div>
+              </div>
+
+              <div *ngIf="post.comments as commentsList" class="bg-indigo-50 p-4 rounded-b-xl">
+                <div *ngFor="let comment of commentsList | slice:0:(showAllComments[post.id] ? commentsList.length : 2)"
+                     class="flex items-start space-x-3 mb-4">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-900 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                    {{$any(comment).author.name.charAt(0)}}{{$any(comment).author.lastName.charAt(0)}}
+                  </div>
+
+                  <div class="bg-white p-3 rounded-lg shadow-sm flex-grow border border-indigo-100">
+                    <div class="flex flex-row items-center space-x-1">
+                      <p class="font-medium text-sm text-purple-900">{{ $any(comment).author.name }} {{ $any(comment).author.lastName }}</p>
+                      <span class="text-xs text-gray-500">{{ $any(comment).author.occupied_job }}</span>
+                    </div>
+                    <p class="text-gray-800 text-sm mt-1">{{ $any(comment).content }}</p>
+                    <div class="flex text-xs text-gray-500 mt-2 space-x-4">
+                      <button class="hover:text-purple-900 transition-colors text-xs">
+                        <i class="far fa-heart mr-1"></i> J'aime
+                      </button>
+                      <button class="hover:text-purple-900 transition-colors text-xs">
+                        <i class="far fa-reply mr-1"></i> Répondre
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="post.comments.length > 2" class="text-center mb-3">
+                  <button (click)="toggleShowAllComments(post.id)"
+                          class="text-sm font-medium text-purple-900 hover:text-purple-400 hover:underline transition-colors
+                              px-4 py-1 rounded-full bg-white shadow-sm hover:shadow border border-indigo-100">
+                    {{ showAllComments[post.id] ? 'Voir moins' : 'Voir plus de commentaires (' + (post.comments.length - 2) + ' de plus)...' }}
+                  </button>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-900 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                    ME
+                  </div>
+                  <div class="flex-grow relative">
+                    <input
+                      [ngModel]="getCommentInput(post.id)"
+                      (ngModelChange)="setCommentInput(post.id, $event)"
+                      type="text"
+                      placeholder="Écrire un commentaire..."
+                      class="w-full text-sm p-2 pl-4 pr-12 border border-indigo-200 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white shadow-sm">
+                    <button
+                      (click)="onCommentPost(post.id)"
+                      class="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 p-1 w-7 h-7 rounded-full transition-colors flex items-center justify-center">
+                      <i class="fas fa-paper-plane text-xs"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="postsList().length === 0" class="flex flex-col items-center justify-center py-12 text-center bg-white rounded-xl shadow-md">
+            <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+              <i class="fas fa-comment-slash text-3xl text-indigo-300"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-700 mb-2">Aucune publication pour le moment</h3>
+            <p class="text-gray-500 max-w-md mb-5 text-base">Soyez le premier à partager une publication avec vos collègues</p>
+            <button (click)="openPostModal()" class="bg-purple-400 hover:bg-purple-400 text-white px-5 py-2 rounded-lg shadow-md transition text-base">
+              <i class="fas fa-plus mr-2"></i> Créer une publication
+            </button>
+          </div>
+        </div>
+
+
+        <div class="lg:w-1/3 flex flex-col">
+          <div class="bg-white rounded-2xl shadow-md border border-purple-100 h-full flex flex-col overflow-hidden sticky top-4">
+            <div class="p-5 bg-gradient-to-r from-purple-400 to-purple-900 text-white">
+              <h2 class="text-2xl font-bold flex items-center">
+                <i class="fas fa-comments mr-2"></i> Discussion en direct
+              </h2>
+              <p class="text-indigo-100 text-base">
+                {{ chatMessages().length }} messages
+              </p>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div class="flex-grow p-4 overflow-y-auto space-y-4" style="height: 450px;">
+              <div *ngFor="let message of chatMessages()" class="flex flex-col space-y-4">
+
+                <!-- Received Message -->
+                <div *ngIf="!isCurrentUser(message)" class="flex items-start space-x-2">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-300 to-purple-900 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                    {{ getInitials(message.sender.name, message.sender.lastName) }}
+                  </div>
+                  <div class="bg-gray-100 p-3 rounded-xl rounded-tl-none max-w-[80%]">
+                    <p class="text-sm font-medium text-purple-900 mb-1">
+                      {{ message.senderName }} {{ message.senderLastName }}
+                      <span class="text-xs text-gray-500 ml-2">{{ message.senderJob }}</span>
+                    </p>
+                    <p class="text-base text-gray-800">{{ message.content }}</p>
+                    <span class="text-xs text-gray-500 block mt-1">
+              {{ message.timestamp | date:'shortTime' }}
+            </span>
+                  </div>
+                </div>
+
+                <!-- Sent Message -->
+                <div *ngIf="isCurrentUser(message)" class="flex items-start justify-end space-x-2">
+                  <div class="bg-purple-900 p-3 rounded-xl rounded-tr-none max-w-[80%]">
+                    <p class="text-base text-white">{{ message.content }}</p>
+                    <span class="text-xs text-indigo-200 block mt-1 text-right">
+              {{ message.timestamp | date:'shortTime' }}
+            </span>
+                  </div>
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-400 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                    {{ getInitials(currentUser.firstName, currentUser.lastName) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-200">
+              <div class="flex items-center space-x-2">
+                <input
+                  [(ngModel)]="newChatMessage"
+                  (keyup.enter)="sendChatMessage()"
+                  type="text"
+                  placeholder="Écrivez votre message..."
+                  class="w-full text-base p-3 pl-4 pr-16 border border-indigo-200 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-950 bg-white">
+                <button
+                  (click)="sendChatMessage()"
+                  class="bg-purple-900 hover:bg-purple-900 text-white p-3 rounded-full transition-colors flex items-center justify-center text-lg">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

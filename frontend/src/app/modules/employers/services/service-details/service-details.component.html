@@ -1,0 +1,143 @@
+<app-navbare></app-navbare>
+<main class="w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <div class="container mx-auto p-6">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 mt-20">
+      <div class="h-48 bg-gradient-to-r from-[#5A4A7B] to-[#8E6EBE] flex items-center justify-center text-white relative">
+        <div class="relative text-center p-6">
+          <h1 class="text-3xl font-bold mb-2">{{ serviceDetails().title }}</h1>
+          <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-6">
+            <div class="flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+              <span>{{ serviceDetails().provider.referenceName }}</span>
+            </div>
+
+            <div class="flex items-center">
+              <div class="flex items-center">
+                <svg *ngFor="let star of [1,2,3,4,5]"
+                     class="w-4 h-4 mr-1"
+                     [class.text-yellow-400]="star <= serviceDetails().provider.rating"
+                     [class.text-gray-300]="star > serviceDetails().provider.rating"
+                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+              </div>
+              <span class="ml-1 text-sm font-medium">
+                {{ serviceDetails().provider.rating | number:'1.1-1' }}/5
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-8">
+        <div class="flex justify-between items-center mb-8">
+
+          <div class="flex space-x-3 items-center mb-8">
+            <button
+              (click)="onReserveClick()"
+              [ngClass]="serviceDetails().isAvailable ? 'bg-[#5A4A7B] hover:bg-[#8E6EBE] text-white' : 'bg-gray-400 text-white cursor-not-allowed'"
+              [disabled]="!serviceDetails().isAvailable"
+              class="px-6 py-2 rounded-lg shadow transition flex items-center">
+              <i class="fas fa-calendar-check"></i> Réserver
+            </button>
+
+            <!-- Like Button -->
+            <button
+              (click)="setEvaluation(true)"
+              [ngClass]="{
+              'bg-green-500 text-white': currentEvaluation.isLike === true,
+              'bg-green-100 text-green-500': currentEvaluation.isLike !== true
+            }"
+              class="flex items-center py-2 px-6 rounded-md transition-colors">
+              <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+              </svg>
+              <span>J'aime</span>
+            </button>
+
+            <!-- Dislike Button -->
+            <button
+              (click)="setEvaluation(false)"
+              [ngClass]="{
+                'bg-red-500 text-white': currentEvaluation.isLike === false,
+                'bg-red-100 text-red-500': currentEvaluation.isLike !== false
+              }"
+              class="flex items-center py-2 px-6 rounded-md transition-colors">
+              <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018c.163 0 .326.02.485.06L17 4m0 0v9m0-9h2.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 13H9m7-9v9"></path>
+              </svg>
+              <span>Je n'aime pas</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-sm font-medium text-gray-500 uppercase mb-2">Détails du service</h3>
+              <ul class="space-y-3">
+                <li class="flex">
+                  <span class="w-28 text-gray-600">Type:</span>
+                  <span class="font-medium">{{ serviceDetails().provider.mainActivity }}</span>
+                </li>
+                <li class="flex">
+                  <span class="w-28 text-gray-600">SIRET</span>
+                  <span class="font-medium">{{ serviceDetails().provider.registryNumber }}</span>
+                </li>
+                <li class="flex">
+                  <span class="w-28 text-gray-600">Disponibilité</span>
+                  <span
+                    [ngClass]="serviceDetails().isAvailable ? 'text-green-500' : 'text-red-500'"
+                    class="font-medium">{{ serviceDetails().isAvailable ? 'Disponible' : 'Inactif' }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-sm font-medium text-gray-500 uppercase mb-2">Disponibilités</h3>
+              <ul class="space-y-3">
+                <li class="flex">
+                  <span class="w-28 text-gray-600">Prochaine:</span>
+                  <span class="font-medium">Lundi 12 Juin, 14h</span>
+                </li>
+                <li class="flex">
+                  <span class="w-28 text-gray-600">Fréquence:</span>
+                  <span class="font-medium">Sur rendez-vous</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-sm font-medium text-gray-500 uppercase mb-2">Localisation</h3>
+              <div class="flex items-start">
+                <i class="fas fa-map-marker-alt text-[#5A4A7B] mt-1 mr-2"></i>
+                <div>
+                  {{ serviceDetails().provider.address }}
+                  <button class="text-[#5A4A7B] hover:text-[#8E6EBE] text-sm mt-1 flex items-center">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="text-sm font-medium text-gray-500 uppercase mb-3">Description du service</h3>
+          <div class="prose max-w-none text-gray-700">
+            {{ serviceDetails().description }}
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</main><p>service-details works!</p>

@@ -1,0 +1,52 @@
+<div class="flex overflow-hidden">
+  <app-sidebar></app-sidebar>
+  <div class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Gestion des Sociétés</h1>
+
+    <button
+            (click)="onCreateCompanyClick()"
+            class="bg-[#5A4A7B] text-white px-6 py-3 rounded-lg mb-6 hover:bg-[#C6B5D6] transition duration-300 shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400">➕ Ajouter une société</button>
+
+      <input
+        (input)="onSearchChange()"
+        [(ngModel)]="searchFilter"
+              type="text"
+              placeholder="Rechercher une société..."
+              class="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5A4A7B] focus:border-[#5A4A7B]"
+      />
+
+
+      <div class="overflow-x-auto bg-white shadow-xl rounded-lg">
+      <table class="min-w-full border border-gray-300 rounded-lg">
+        <thead>
+        <tr class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+          <th class="py-3 px-5 text-left">ID</th>
+          <th class="py-3 px-5 text-left">Nom de l’entreprise</th>
+          <th class="py-3 px-9 text-left">Numéro de téléphone</th>
+          <th class="py-3 px-5 text-left">Email de contact</th>
+          <th class="py-3 px-4 text-left">Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          [routerLink]="['/admin/company', company.id]"
+          *ngFor="let company of companiesList()" class="bg-gray-50 hover:bg-gray-200 cursor-pointer">
+          <td class="py-3 px-5 text-left font-bold">{{ company.id }}</td>
+          <td class="py-3 px-5 text-left">{{ company.name }}</td>
+          <td class="py-3 px-12 text-left">{{ company.phoneNumber ?? 'Numéro non rensigné' }}</td>
+          <td class="py-3 px-8 text-left font-bold">{{ company.userEmail }}</td>
+          <td
+            class="py-3 px-5 text-left">
+            <div
+              class="text-wrap text-white p-2 rounded-md w-fit text-xs"
+              [ngClass]="company.status === 'ACTIVE' ? 'bg-green-400' : 'bg-red-400'"
+            >
+            {{ company.status }}
+          </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

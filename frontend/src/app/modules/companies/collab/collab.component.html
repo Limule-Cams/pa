@@ -1,0 +1,152 @@
+<app-c-navbare></app-c-navbare>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 pt-24">
+  <!-- En-tête -->
+  <div class="relative  w-full">
+    <div *ngIf="isLoading" class="absolute inset-0 flex items-center justify-center">
+      <app-spinner [overlay]="true" size="lg" message="Création des salarieés en cours ..."></app-spinner>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto animate-fade-in">
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-[#5A4A7B]">Gestion des Collaborateurs</h1>
+        <p class="text-gray-600 mt-2">Gérez l'ensemble de vos collaborateurs et leurs rattachements</p>
+      </div>
+      <div class="flex flex-row space-x-3">
+        <input #fileInput type="file" accept=".csv" (change)="onFileSelected($event)" class="hidden">
+        <button (click)="fileInput.click()"
+                class="bg-[#5A4A7B] hover:bg-[#3D3260] text-white px-4 py-2 rounded-lg flex items-center transition-colors"
+                [disabled]="isLoading">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          {{ isLoading ? 'Importing...' : 'Importer un fichier CSV' }}
+        </button>
+      </div>
+    </div>
+    <div class="h-1 w-20 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] rounded-full mb-8"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-200">
+      <div class="flex items-center">
+        <div class="p-3 rounded-lg bg-[#F0EBFF] mr-4">
+          <svg class="h-6 w-6 text-[#5A4A7B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Collaborateurs actifs</p>
+          <p class="text-2xl font-bold text-[#5A4A7B]">{{ employeesList().length }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-200">
+      <div class="flex items-center">
+        <div class="p-3 rounded-lg bg-[#F0EBFF] mr-4">
+          <svg class="h-6 w-6 text-[#5A4A7B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Nouveaux cette année</p>
+          <p class="text-2xl font-bold text-[#5A4A7B]">{{ getNewEmployeesCount() }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+    <div class="p-1 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6]"></div>
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-[#5A4A7B]">Liste des Collaborateurs</h2>
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Rechercher un collaborateur..."
+            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5A4A7B] focus:border-[#5A4A7B]"
+            [ngModel]="searchTerm()"
+            (ngModelChange)="searchTerm.set($event); applyFilter()"
+          >
+          <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Collaborateur</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Email</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Poste</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Rattachement</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Actions</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            @for (employee of filteredEmployees(); track employee) {
+              <tr class="hover:bg-[#F8F5FF] transition-colors duration-150">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">{{ employee.firstName }} {{ employee.lastName }}</div>
+                      <div class="text-sm text-gray-500">ID: {{ employee.id }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ employee.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ employee.occupied_job }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+            {{ employee.contractType }}
+          </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button (click)="onEmployeeDelete(employee.id)" class="text-red-500 hover:text-red-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="px-6 py-12 text-center">
+                  <div class="flex flex-col items-center justify-center space-y-4">
+                    <svg class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    </svg>
+                    <h3 class="text-lg font-medium text-gray-900">Aucun employé trouvé</h3>
+                    <p class="text-sm text-gray-500 max-w-md text-center">
+                      Vous n'avez pas encore importé votre liste d'employés. Téléchargez votre fichier CSV pour commencer.
+                    </p>
+                    <button
+                      class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#5A4A7B] hover:bg-[#3D3260] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5A4A7B]"
+                      (click)="fileInput.click()"
+                    >
+                      <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      Importer un fichier CSV
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-c-footer></app-c-footer>
+
+
+

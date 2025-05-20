@@ -1,0 +1,136 @@
+<app-c-navbare></app-c-navbare>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 pt-24">
+  <div class="max-w-7xl mx-auto animate-fade-in">
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-[#5A4A7B]">Gestion des Contrats</h1>
+        <p class="text-gray-600 mt-2">Consultez et gérez tous vos abonnements et contrats</p>
+      </div>
+    </div>
+    <div class="h-1 w-20 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] rounded-full mb-8"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-200">
+      <div class="flex items-center">
+        <div class="p-3 rounded-lg bg-[#F0EBFF] mr-4">
+          <svg class="h-6 w-6 text-[#5A4A7B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Contrats Actifs</p>
+          <p class="text-2xl font-bold text-[#5A4A7B]">{{ getActiveContract() }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-200">
+      <div class="flex items-center">
+        <div class="p-3 rounded-lg bg-[#F0EBFF] mr-4">
+          <svg class="h-6 w-6 text-[#5A4A7B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Expirer</p>
+          <p class="text-2xl font-bold text-[#5A4A7B]">{{ getExpiredContract() }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-200">
+      <div class="flex items-center">
+        <div class="p-3 rounded-lg bg-[#F0EBFF] mr-4">
+          <svg class="h-6 w-6 text-[#5A4A7B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Dépenses</p>
+          <p class="text-2xl font-bold text-[#5A4A7B]">
+            {{ getExpensesSummary() | number:'1.2-2' }}€
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+    <div class="p-1 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6]"></div>
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-[#5A4A7B]">Liste des Contrats</h2>
+      </div>
+
+      <div class="overflow-x-auto">
+        <!-- Contracts table -->
+        <table class="min-w-full divide-y divide-gray-200" *ngIf="hasContracts(); else noContracts">
+          <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type d'abonnement</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de début</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de fin</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">État</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let contract of contractList()" class="hover:bg-[#F8F5FF] transition-colors duration-150">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10 bg-[#F0EBFF] rounded-lg flex items-center justify-center mr-3">
+                  <svg class="h-6 w-6 text-[#5A4A7B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-medium text-gray-900 font-semibold">{{ contract.subscriptionTier | uppercase }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ contract.startDate }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ contract.endDate }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  [ngClass]="contract.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                  {{ contract.status | uppercase }}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <button (click)="onDownloadContractClick(contract.fileUrl)" class="text-[#5A4A7B] hover:text-[#3D3260] transition-colors">
+                <img class="h-10 w-10 cursor-pointer" src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg">
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- No contracts template -->
+        <ng-template #noContracts>
+          <div class="py-12 flex flex-col items-center justify-center">
+            <svg class="h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun contrat disponible</h3>
+            <p class="text-sm text-gray-500 max-w-md text-center mb-6">
+              Vous n'avez pas encore souscrit à un contrat. Parcourez nos offres pour trouver celle qui vous convient.
+            </p>
+            <a
+              routerLink="/companies/devis-fact"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#5A4A7B] hover:bg-[#3D3260] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5A4A7B]"
+            >
+              <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+              </svg>
+              Découvrir nos offres
+            </a>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-c-footer></app-c-footer>

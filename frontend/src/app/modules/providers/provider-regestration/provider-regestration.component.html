@@ -1,0 +1,360 @@
+<div *ngIf="registrationSuccess" class="success-message mt-44 p-8 max-w-md mx-auto border-2 border-green-300 rounded-2xl bg-gradient-to-b from-green-50 to-green-100 text-center shadow-lg transform transition-all duration-500 ease-in-out hover:scale-[1.02]">
+  <div class="mb-6 flex justify-center">
+    <div class="rounded-full bg-green-100 p-4 animate-bounce">
+      <svg class="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+  </div>
+
+  <div class="space-y-4">
+    <h3 class="text-2xl font-bold text-green-800 mb-2 animate-pulse">Bienvenue chez CareSync !</h3>
+
+    <p class="text-green-700 leading-relaxed">
+      <span class="block font-semibold">Votre inscription a bien été enregistrée.</span>
+      Notre équipe examine votre demande et vous contactera sous 24-48 heures.
+    </p>
+
+    <div class="pt-4 border-t border-green-200">
+      <p class="text-sm text-green-600 flex items-center justify-center space-x-2">
+        <svg class="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>Redirection automatique dans quelques instants...</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="absolute top-2 right-2 text-green-300">
+    <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+    </svg>
+  </div>
+</div>
+
+<div *ngIf="!registrationSuccess" class="w-screen h-screen gradient-bg flex items-center justify-center relative overflow-hidden">
+  <div class="absolute inset-0 bg-purple-950 opacity-50"></div>
+
+
+  <div class="container mx-auto px-6 md:px-12 lg:px-24 z-10 h-screen overflow-auto">
+
+    <div class="w-full max-w-4xl mx-auto p-10 rounded-3xl bg-opacity-90 bg-[#B5A7C0] shadow-xl ">
+      <h1 class="text-3xl font-bold text-white mb-8 text-center ">Compléter votre profil prestataire</h1>
+
+      <form class="space-y-8" [formGroup]="providerDetailsForm">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center">
+            <div [ngClass]="{'bg-pink-500': step >= 1, 'bg-gray-300': step < 1}"
+                 class="rounded-full h-10 w-10 flex items-center justify-center text-white font-bold">1
+            </div>
+            <div class="h-1 w-16 mx-2" [ngClass]="{'bg-pink-500': step >= 2, 'bg-gray-300': step < 2}"></div>
+            <div [ngClass]="{'bg-pink-500': step >= 2, 'bg-gray-300': step < 2}"
+                 class="rounded-full h-10 w-10 flex items-center justify-center text-white font-bold">2
+            </div>
+            <div class="h-1 w-16 mx-2" [ngClass]="{'bg-pink-500': step >= 3, 'bg-gray-300': step < 3}"></div>
+            <div [ngClass]="{'bg-pink-500': step >= 3, 'bg-gray-300': step < 3}"
+                 class="rounded-full h-10 w-10 flex items-center justify-center text-white font-bold">3
+            </div>
+          </div>
+          <div class="text-white font-medium">
+            {{ step === 1 ? 'Informations professionnelles' : step === 2 ? 'Services proposés' : 'Documents & Certifications' }}
+          </div>
+        </div>
+
+        <!-- Step 1: Professional Information -->
+        <div *ngIf="step === 1" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+            <div class="space-y-2">
+              <label for="siret" class="text-white font-semibold text-lg">Numéro SIRET</label>
+              <input
+                formControlName="siret"
+                type="text" id="siret" placeholder="Ex: 123 456 789 00012"
+                class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              <span *ngIf="submitted && providerDetailsForm.get('siret')?.hasError('required')"
+                    class="text-red-500 text-sm">
+                Le numéro SIRET est requis.
+              </span>
+              <span *ngIf="submitted && providerDetailsForm.get('siret')?.hasError('pattern')"
+                    class="text-red-500 text-sm">
+                Le SIRET doit contenir exactement 14 chiffres.
+              </span>
+            </div>
+
+          </div>
+
+          <div class="space-y-2">
+            <label for="mainActivity" class="text-white font-semibold text-lg">Activité principale</label>
+            <input
+              placeholder="exemple: Programmation informatique"
+              formControlName="mainActivity"
+              class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+            <span *ngIf="submitted && providerDetailsForm.get('mainActivity')?.hasError('required')"
+                  class="text-red-500 text-sm">
+              L'activité principale est requise.
+            </span>
+          </div>
+
+          <div class="space-y-2">
+            <label for="yearsExperience" class="text-white font-semibold text-lg">Années d'expérience</label>
+            <input
+              placeholder="Expérience"
+              formControlName="yearsExperience"
+              type="number" id="yearsExperience" min="0" max="99"
+              class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+            <span *ngIf="submitted && providerDetailsForm.get('yearsExperience')?.hasError('required')"
+                  class="text-red-500 text-sm">
+              Les années d'expérience sont requises.
+            </span>
+          </div>
+
+          <div class="space-y-2">
+            <label for="description" class="text-white font-semibold text-lg">Description de votre activité</label>
+            <textarea
+              formControlName="description"
+              id="description" rows="4"
+              placeholder="Décrivez votre activité, votre expertise et vos méthodes de travail..."
+              class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] placeholder-[#706685] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md"></textarea>
+            <span *ngIf="submitted && providerDetailsForm.get('description')?.hasError('required')"
+                  class="text-red-500 text-sm">
+              La description est requise.
+            </span>
+          </div>
+
+          <div class="flex justify-end mt-6">
+            <button (click)="nextStep()"
+                    class="px-8 py-4 bg-gradient-to-r from-[#E91E63] to-[#C2185B] hover:opacity-90 text-white font-bold uppercase tracking-wide rounded-full shadow-xl transition-transform transform hover:scale-105 duration-300">
+              Suivant
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Services -->
+        <div *ngIf="step === 2" class="space-y-4">
+          <div class="p-4 rounded-xl">
+            <h2 class="text-2xl font-semibold text-white mb-2">Vos services</h2>
+            <p class="text-white mb-4">Ajoutez les services que vous proposez à vos clients.</p>
+
+            <div formArrayName="services" class="space-y-3">
+              <div *ngFor="let service of services.controls; let i = index" [formGroupName]="i"
+                   class="bg-[#F6F4FD] rounded-lg shadow-sm">
+                <!-- Compact header with expand/collapse functionality -->
+                <div class="flex justify-between items-center p-3 cursor-pointer" (click)="toggleService(i)">
+                  <div class="flex items-center space-x-2">
+                    <h3 class="font-medium text-[#54486B]">{{ service.get('title')?.value || 'Nouveau service' }}</h3>
+                    <span *ngIf="service.get('price')?.value" class="text-sm text-gray-500">
+              {{ service.get('price')?.value }}€
+              <span *ngIf="service.get('negotiable')?.value">(Négociable)</span>
+            </span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <button type="button" (click)="removeService(i); $event.stopPropagation()"
+                            class="text-red-500 hover:text-red-700 p-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                           stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                      </svg>
+                    </button>
+                    <svg [class.transform]="!expandedServices[i]" [class.rotate-180]="!expandedServices[i]"
+                         xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#54486B] transition-transform"
+                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Expandable content -->
+                <div *ngIf="expandedServices[i]" class="p-3 pt-0 border-t border-gray-200">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                      <label class="text-sm text-[#54486B] font-medium">Titre du service</label>
+                      <input
+                        formControlName="title"
+                        type="text"
+                        placeholder="Ex: Consultation stratégique"
+                        class="w-full p-2 bg-white border border-gray-200 rounded-lg text-[#54486B] focus:outline-none focus:ring-1 focus:ring-[#8E6EBE]">
+                      <span *ngIf="submitted && service.get('title')?.hasError('required')" class="text-red-500 text-xs">
+                Le titre est requis.
+              </span>
+                    </div>
+
+                    <div class="space-y-1">
+                      <label class="text-sm text-[#54486B] font-medium">Prix (€)</label>
+                      <div class="flex items-center space-x-2">
+                        <input
+                          formControlName="price"
+                          type="number"
+                          placeholder="Ex: 75"
+                          class="w-full p-2 bg-white border border-gray-200 rounded-lg text-[#54486B] focus:outline-none focus:ring-1 focus:ring-[#8E6EBE]">
+                        <div class="flex items-center">
+                          <input
+                            formControlName="negotiable"
+                            type="checkbox"
+                            id="negotiable{{i}}"
+                            class="h-4 w-4 text-pink-500 rounded focus:ring-pink-500">
+                          <label for="negotiable{{i}}" class="ml-1 text-xs text-[#54486B]">Négociable</label>
+                        </div>
+                      </div>
+                      <span *ngIf="submitted && service.get('price')?.hasError('required')" class="text-red-500 text-xs">
+                Le prix est requis.
+              </span>
+                    </div>
+                  </div>
+
+                  <div class="mt-2 space-y-1">
+                    <label class="text-sm text-[#54486B] font-medium">Description</label>
+                    <textarea
+                      formControlName="description"
+                      rows="2"
+                      placeholder="Décrivez ce service en détail..."
+                      class="w-full p-2 bg-white border border-gray-200 rounded-lg text-[#54486B] focus:outline-none focus:ring-1 focus:ring-[#8E6EBE]"></textarea>
+                    <span *ngIf="submitted && service.get('description')?.hasError('required')"
+                          class="text-red-500 text-xs">
+              La description est requise.
+            </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              (click)="addService()"
+              class="mt-4 flex items-center justify-center w-full p-2 bg-[#8E6EBE] text-white rounded-lg hover:bg-[#7d5eab] transition-colors duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              Ajouter un service
+            </button>
+          </div>
+
+          <div class="flex justify-between mt-4">
+            <button (click)="prevStep()"
+                    class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-full shadow-md transition-all duration-300">
+              Précédent
+            </button>
+            <button (click)="nextStep()"
+                    class="px-4 py-2 bg-gradient-to-r from-[#E91E63] to-[#C2185B] hover:opacity-90 text-white font-bold uppercase tracking-wide rounded-full shadow-xl transition-transform transform hover:scale-105 duration-300">
+              Suivant
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Documents & Certifications -->
+        <div *ngIf="step === 3" class="space-y-6">
+          <div class=" p-6 rounded-xl ">
+            <h2 class="text-2xl font-semibold text-white mb-4">Documents et certifications</h2>
+            <p class="text-white mb-6">Téléchargez des documents qui attestent de vos compétences, certifications, ou
+              qualifications professionnelles.</p>
+
+            <div formArrayName="documents" class="space-y-8">
+              <div *ngFor="let document of documents.controls; let i = index" [formGroupName]="i"
+                   class="p-6 bg-[#F6F4FD] rounded-xl shadow-md mb-4">
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-xl font-semibold text-[#54486B]">Document #{{ i + 1 }}</h3>
+                  <button type="button" (click)="removeDocument(i)" class="text-red-500 hover:text-red-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div class="space-y-2">
+                    <label class="text-[#54486B] font-medium">Titre du document</label>
+                    <input
+                      formControlName="title"
+                      type="text"
+                      placeholder="Ex: Certification professionnelle"
+                      class="w-full p-4 bg-white border border-gray-200 rounded-xl text-[#54486B] focus:outline-none focus:ring-2 focus:ring-[#8E6EBE]">
+                    <span *ngIf="submitted && document.get('title')?.hasError('required')" class="text-red-500 text-sm">
+                      Le titre est requis.
+                    </span>
+                  </div>
+
+                  <div class="space-y-2">
+                    <label class="text-[#54486B] font-medium">Type de document</label>
+                    <select
+                      formControlName="type"
+                      class="w-full p-4 bg-white border border-gray-200 rounded-xl text-[#54486B] focus:outline-none focus:ring-2 focus:ring-[#8E6EBE]">
+                      <option value="" disabled selected>Sélectionnez le type</option>
+                      <option value="certification">Certification</option>
+                      <option value="diploma">Diplôme</option>
+                      <option value="license">Licence professionnelle</option>
+                      <option value="portfolio">Portfolio</option>
+                      <option value="other">Autre</option>
+                    </select>
+                    <span *ngIf="submitted && document.get('type')?.hasError('required')" class="text-red-500 text-sm">
+                      Le type est requis.
+                    </span>
+                  </div>
+                </div>
+
+                <div class="space-y-2">
+                  <label class="text-[#54486B] font-medium">Fichier</label>
+                  <div class="flex items-center justify-center w-full">
+                    <label [for]="'file-upload-' + i"
+                           class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-white hover:bg-gray-50">
+                      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-500">
+                          <span *ngIf="!document.get('fileName')?.value">Cliquez pour télécharger</span>
+                          <span *ngIf="document.get('fileName')?.value">{{ document.get('fileName')?.value }}</span>
+                        </p>
+                        <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 10MB)</p>
+                      </div>
+                      <input
+                        [id]="'file-upload-' + i"
+                        type="file"
+                        class="hidden"
+                        (change)="onFileChange($event, i)">
+                    </label>
+                  </div>
+                  <span *ngIf="submitted && document.get('file')?.hasError('required')" class="text-red-500 text-sm">
+                    Le fichier est requis.
+                  </span>
+                </div>
+
+                <div class="space-y-2 mt-4">
+                  <label class="text-[#54486B] font-medium">Description</label>
+                  <textarea
+                    formControlName="description"
+                    rows="2"
+                    placeholder="Décrivez brièvement ce document..."
+                    class="w-full p-4 bg-white border border-gray-200 rounded-xl text-[#54486B] focus:outline-none focus:ring-2 focus:ring-[#8E6EBE]"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              (click)="addDocument()"
+              class="mt-6 flex items-center justify-center w-full p-3 bg-[#8E6EBE] text-white rounded-xl hover:bg-[#7d5eab] transition-colors duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              Ajouter un document
+            </button>
+          </div>
+
+          <div class="flex justify-between mt-6">
+            <button (click)="prevStep()"
+                    class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-full shadow-md transition-all duration-300">
+              Précédent
+            </button>
+            <button (click)="submitForm()"
+                    class="px-8 py-4 bg-gradient-to-r from-[#E91E63] to-[#C2185B] hover:opacity-90 text-white font-bold uppercase tracking-wide rounded-full shadow-xl transition-transform transform hover:scale-105 duration-300">
+              Finaliser l'inscription
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

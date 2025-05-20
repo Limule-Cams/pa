@@ -1,0 +1,26 @@
+<app-navbare></app-navbare>
+<main class="w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <div class="container mx-auto p-6 max-w-4xl">
+    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 mt-24">
+      <!-- Header image section (you can make this dynamic too) -->
+      <div class="h-64 bg-gradient-to-r from-purple-100 to-indigo-100 flex items-center justify-center">
+        <i class="fas fa-spa text-6xl text-[#5A4A7B]"></i>
+      </div>
+
+      <div class="p-8">
+        <!-- Dynamic title -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ selectedAdvice?.title }}</h1>
+
+        <!-- Markdown content container -->
+        <div class="prose max-w-none mb-8 markdown-body">
+          <markdown [data]="selectedAdvice?.summary"></markdown>
+        </div>
+
+        <!-- Optional metadata section -->
+        <div class="pt-4 border-t text-sm text-gray-500">
+          <p>Publié le {{ selectedAdvice?.createdAt | date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

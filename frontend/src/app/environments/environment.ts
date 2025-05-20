@@ -1,0 +1,3 @@
+export const environment = {
+  stripePublishableKey:'pk_test_51QrncyFbBjnjBRPRGo8iRoDjeAXy2lwcLL2CBGoIRhuhpfKHKS0toBwgSYfYHQctoNUGpb7xBDi9kpd8wrsfl04k00rASMEnUV'
+}

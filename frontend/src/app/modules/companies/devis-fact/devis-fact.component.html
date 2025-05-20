@@ -1,0 +1,329 @@
+<app-c-navbare></app-c-navbare>
+<div class="mt-20 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <div class="max-w-7xl mx-auto text-center mb-12 animate-fade-in">
+    <h2 class="text-4xl md:text-5xl font-bold text-[#5A4A7B] mb-3 transform hover:scale-105 transition-transform duration-300">Nos Offres CareSync</h2>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">Découvrez nos solutions adaptées à chaque taille d'entreprise pour améliorer le bien-être de vos équipes</p>
+    <div class="mt-4 h-1 w-24 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] mx-auto rounded-full"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+    <div class="lg:w-3/4 bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-all hover:shadow-2xl hover:-translate-y-1">
+      <div class="p-1 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6]"></div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+          <tr class="bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] text-white">
+            <th class="px-8 py-5 text-center text-sm font-semibold uppercase tracking-wider">Catégorie</th>
+            <th class="px-8 py-5 text-center text-sm font-semibold uppercase tracking-wider">Starter</th>
+            <th class="px-8 py-5 text-center text-sm font-semibold uppercase tracking-wider">Basic</th>
+            <th class="px-8 py-5 text-center text-sm font-semibold uppercase tracking-wider">Premium</th>
+          </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">Effectif de l'entreprise</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">jusqu'à {{ getStarterDevis()?.maxEmployees }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">jusqu'à {{ getBasicDevis()?.maxEmployees }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">A partir de {{ getPremiumDevis()?.maxEmployees + 1 }}</td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">Tarif annuel par salarié</td>
+            <td class="px-8 py-6 text-center">
+              <div class="inline-block bg-[#F8F5FF] px-4 py-2 rounded-lg group-hover:scale-105 transition-transform">
+                <span class="text-xl font-bold text-[#5A4A7B]">{{ getStarterDevis()?.price }}€</span>
+              </div>
+            </td>
+            <td class="px-8 py-6 text-center">
+              <div class="inline-block bg-[#F0EBFF] px-4 py-2 rounded-lg group-hover:scale-105 transition-transform">
+                <span class="text-xl font-bold text-[#5A4A7B]">{{ getBasicDevis()?.price }}€</span>
+              </div>
+            </td>
+            <td class="px-8 py-6 text-center">
+              <div class="inline-block bg-[#E0D5FF] px-4 py-2 rounded-lg group-hover:scale-105 transition-transform">
+                <span class="text-xl font-bold text-[#5A4A7B]">{{ getPremiumDevis()?.price }}€</span>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">Activités (avec participation des prestataires de BC)</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getStarterDevis()?.includedActivities }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getBasicDevis()?.includedActivities }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getPremiumDevis()?.includedActivities }}</td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">RDV médicaux (présentiel/visio)</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getStarterDevis()?.includedAppointments }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getBasicDevis()?.includedAppointments }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getPremiumDevis()?.includedAppointments }}</td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">RDV médicaux supplémentaires (aux frais des salariés)</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getStarterDevis()?.additionalAppointmentPrice }}€/rdv</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getBasicDevis()?.additionalAppointmentPrice }}€/rdv</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getPremiumDevis()?.additionalAppointmentPrice }}€/rdv</td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">Accès au chatbot</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getStarterDevis()?.chatbotQuestions }} questions</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getBasicDevis()?.chatbotQuestions }} questions</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getPremiumDevis()?.chatbotAccess === 'unlimited' ? 'illimité' : getPremiumDevis()?.chatbotQuestions + ' questions' }}</td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">Accès aux fiches pratiques BC</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">illimité</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">illimité</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">illimité</td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">Conseils hebdomadaires</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getStarterDevis()?.weeklyAdvice ? 'Oui' : 'Non' }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getBasicDevis()?.weeklyAdvice ? 'Oui' : 'Non' }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getPremiumDevis()?.weeklyAdvice ? 'Oui personnalisés' : 'Non' }}</td>
+          </tr>
+
+          <tr class="hover:bg-[#F8F5FF] transition-colors duration-200 group">
+            <td class="px-8 py-6 text-center font-medium text-gray-700">Conseils personnalisés</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getStarterDevis()?.personalizedAdvice ? 'Oui' : 'Non' }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getBasicDevis()?.personalizedAdvice ? 'Oui' : 'Non' }}</td>
+            <td class="px-8 py-6 text-center group-hover:text-[#5A4A7B] transition-colors">{{ getPremiumDevis()?.personalizedAdvice ? 'Oui' : 'Non' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-all hover:shadow-2xl hover:-translate-y-1">
+      <div class="p-1 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6]"></div>
+
+      <div class="p-8">
+        @if (!alreadySubscribed) {
+          <div class="flex items-center mb-6">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-[#F0EBFF] flex items-center justify-center mr-4">
+              <svg class="h-6 w-6 text-[#5A4A7B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-[#5A4A7B]">Demander un Devis</h3>
+              <p class="text-gray-600">Obtenez une estimation personnalisée en 2 minutes</p>
+            </div>
+          </div>
+
+          <form [formGroup]="quoteForm" class="space-y-6">
+            <form [formGroup]="quoteForm" class="space-y-6">
+              <div>
+                <label for="employees" class="block text-sm font-medium text-gray-700 mb-1">Nombre de salariés</label>
+                <input type="number" id="employees" formControlName="employees"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5A4A7B] focus:border-[#5A4A7B] transition-all"
+                       min="1" required>
+                @if (quoteForm.get('employees')?.invalid && quoteForm.get('employees')?.touched) {
+                  <p class="mt-1 text-sm text-red-600">Veuillez entrer un nombre valide (minimum 1)</p>
+                }
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex items-center">
+                  <input type="checkbox" id="customDevis"
+                         class="h-4 w-4 text-[#5A4A7B] focus:ring-[#5A4A7B] border-gray-300 rounded">
+                  <label for="customDevis" class="ml-2 block text-sm font-medium text-gray-700">Utiliser un devis personnalisé</label>
+                </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Type d'abonnement</label>
+                    <div class="grid grid-cols-3 gap-3">
+                      <label class="flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-[#F8F5FF] transition-colors"
+                             [class.border-[#5A4A7B]="quoteForm.get('subscriptionType')?.value === 'starter'">
+                        <input type="radio" formControlName="subscriptionType" value="starter" class="h-4 w-4 text-[#5A4A7B] focus:ring-[#5A4A7B]">
+                        <span class="text-sm font-medium text-gray-700">Starter</span>
+                      </label>
+                      <label class="flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-[#F8F5FF] transition-colors"
+                             [class.border-[#5A4A7B]="quoteForm.get('subscriptionType')?.value === 'basic'">
+                        <input type="radio" formControlName="subscriptionType" value="basic" class="h-4 w-4 text-[#5A4A7B] focus:ring-[#5A4A7B]">
+                        <span class="text-sm font-medium text-gray-700">Basic</span>
+                      </label>
+                      <label class="flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-[#F8F5FF] transition-colors"
+                             [class.border-[#5A4A7B]="quoteForm.get('subscriptionType')?.value === 'premium'">
+                        <input type="radio" formControlName="subscriptionType" value="premium" class="h-4 w-4 text-[#5A4A7B] focus:ring-[#5A4A7B]">
+                        <span class="text-sm font-medium text-gray-700">Premium</span>
+                      </label>
+                    </div>
+                  </div>
+
+              </div>
+
+              <button type="button" (click)="onGenerateQuoteClick()"
+                      class="w-full bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] text-white py-3 px-4 rounded-lg font-medium shadow-md hover:shadow-lg transform hover:scale-[1.01] transition-all duration-200">
+                Générer un devis
+              </button>
+            </form>
+          </form>
+        } @else {
+          <div class="flex items-center mb-6">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-4">
+              <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-green-600">Abonnement Actif</h3>
+              <p class="text-gray-600">Vous avez déjà un abonnement en cours</p>
+            </div>
+          </div>
+
+          <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-green-700">
+                  Vous pouvez gérer votre abonnement dans votre <a [routerLink]="['/companies/contract']" class="font-medium underline text-green-700 hover:text-green-600">espace contrat</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div *ngIf="isLoading">
+          <app-spinner [size]="'md'" [overlay]="true" message="Génération du devis en cours..." />
+
+        </div>
+
+        <div *ngIf="quoteGenerated" class="mt-8 space-y-6 animate-fade-in">
+          <div class="p-6 border border-[#C6B5D6] rounded-xl bg-[#F8F5FF]">
+            <h3 class="text-xl font-bold text-[#5A4A7B] mb-4">Votre Devis CareSync</h3>
+
+            <div class="space-y-4">
+              <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                <span class="font-medium text-gray-700">Détails de l'abonnement</span>
+                <span class="font-medium text-[#5A4A7B]">{{ subscriptionTypeLabel }}</span>
+              </div>
+
+              <div class="flex justify-between">
+                <span class="text-gray-600">Nombre de salariés</span>
+                <span class="font-semibold">{{ employeeCount }}</span>
+              </div>
+
+              <div class="flex justify-between">
+                <span class="text-gray-600">Tarif par salarié (annuel)</span>
+                <span class="font-semibold">{{ pricePerEmployee }}€</span>
+              </div>
+
+              <div class="border-t border-gray-200 my-2"></div>
+
+              <div class="space-y-3">
+                <h4 class="font-medium text-gray-700">Services inclus:</h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <span class="text-gray-700">{{ includedActivities }} activités</span>
+                      <p class="text-xs text-gray-500">(avec participation des prestataires de BC)</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <span class="text-gray-700">{{ includedAppointments }} RDV médicaux</span>
+                      <p class="text-xs text-gray-500">(présentiel/visio)</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <span class="text-gray-700">RDV supplémentaires à {{ additionalAppointmentPrice }}€</span>
+                      <p class="text-xs text-gray-500">(aux frais des salariés)</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <span class="text-gray-700">Chatbot: {{ chatbotAccess }}</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <span class="text-gray-700">Accès illimité aux fiches pratiques BC</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <span class="text-gray-700">Conseils hebdomadaires: {{ weeklyAdvice }}</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <span class="text-gray-700">Accès illimité aux événements/communautés</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-4 border-t-2 border-dashed border-gray-200">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-gray-600">Sous-total annuel</span>
+                  <span class="font-semibold">{{ subtotal }}€</span>
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-gray-600">TVA (20%)</span>
+                  <span class="font-semibold">{{ vat }}€</span>
+                </div>
+                <div class="flex justify-between items-center pt-2 border-t border-gray-200">
+                  <span class="text-lg font-bold text-[#5A4A7B]">Total annuel</span>
+                  <span class="text-lg font-bold text-[#5A4A7B]">{{ totalAmount }}€</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button (click)="proceedToPayment()"
+                    class="flex-1 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] text-white py-3 px-4 rounded-lg font-medium shadow-md hover:shadow-lg transform hover:scale-[1.01] transition-all duration-200 flex items-center justify-center group">
+              <span>Souscrire maintenant</span>
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-c-footer></app-c-footer>

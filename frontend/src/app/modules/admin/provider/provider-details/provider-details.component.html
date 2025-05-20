@@ -1,0 +1,211 @@
+<div class="flex">
+  <app-sidebar></app-sidebar>
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto p-6">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">Détails de Prestataire</h2>
+
+      <nav class="bg-[#E7E2EC] shadow-lg rounded-lg p-4 mb-6 border border-gray-200 flex items-center justify-between">
+        <div class="flex gap-4">
+          <button (click)="onScreenChange(DashboardScreens.INFOS)" class="bg-[#5A4A7B] text-white px-5 py-2 rounded-full shadow-md hover:bg-purple-900 transition duration-300">
+            Informations Générales
+          </button>
+          <button (click)="onScreenChange(DashboardScreens.VERIVICATIONS)" class="bg-[#5A4A7B] text-white px-5 py-2 rounded-full shadow-md hover:bg-purple-900 transition duration-300">
+            Vérification et Validation
+          </button>
+          <button (click)="onScreenChange(DashboardScreens.SERVICES)" class="bg-[#5A4A7B] text-white px-5 py-2 rounded-full shadow-md hover:bg-purple-900 transition duration-300">
+             Services et Prestations
+          </button>
+        </div>
+
+        <button class="p-2 rounded-full bg-gray-300 hover:bg-gray-400 transition duration-300 shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </nav>
+
+
+
+
+      <div *ngIf="defaultForm === DashboardScreens.INFOS" class="bg-[#E7E2EC] shadow-lg rounded-lg p-8 mb-6 border border-gray-200">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Informations du Prestataire</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-600">
+          <!-- Display fields as read-only information -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Nom / Prénom</label>
+            <div class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-gray-800">
+              {{ selectedProvider?.fullName || 'Non renseigné' }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Nom de référence</label>
+            <div class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-gray-800">
+              {{ selectedProvider.referenceName|| 'Non renseigné' }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Email professionnel</label>
+            <div class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-blue-600">
+              {{ selectedProvider?.user.email || 'Non renseigné' }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Numéro de téléphone</label>
+            <div class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-gray-800">
+              {{ selectedProvider.phoneNumber || 'Non renseigné' }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">SIRET</label>
+            <div class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-gray-800">
+              {{ selectedProvider?.registryNumber || 'Non renseigné' }}
+            </div>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-gray-700 font-medium mb-2">Adresse</label>
+            <div class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-gray-800">
+              {{ selectedProvider?.address || 'Non renseigné' }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Type de prestation</label>
+            <div class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-gray-800">
+              {{ getProviderTypeLabel(selectedProvider?.mainActivity) || 'Non renseigné' }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Statut</label>
+            <div
+              [ngClass]="selectedProvider.user.isActive ? 'text-green-500' : 'text-red-500'"
+              class="w-full p-3 bg-gray-100 rounded-lg shadow-sm text-gray-800">
+              {{ selectedProvider.user.isActive ? 'Validé' : 'En attente de validation' }}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end mt-6 space-x-4">
+          <button
+
+            (click)="validateProvider()"
+            [ngClass]="selectedProvider.user.isActive ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 cursor-pointer hover:bg-green-600'"
+            class=" text-white px-6 py-3 rounded-lg shadow-md  transition duration-300">
+            Valider
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="defaultForm === DashboardScreens.VERIVICATIONS" class="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Vérification et Validation</h3>
+
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Documents justificatifs</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Secteur</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Description</th>
+              <th scope="col" class="px-6 py-3 text-right text-xs font-medium  uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let doc of selectedProvider?.certifications || []" class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {{ doc.title || 'Non spécifié' }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
+                  [ngClass]="{
+                    'bg-purple-100 text-purple-800': doc.industry,
+                    'bg-gray-100 text-gray-800': !doc.industry
+                  }">
+              {{ doc.industry || 'Non spécifié' }}
+            </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">
+                {{ doc.description || 'Aucune description' }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <button
+                  (click)="onDowloadClick(doc.documentUrl)"
+                  class="text-indigo-600 hover:text-indigo-900 p-1 rounded-full hover:bg-indigo-50 transition-colors mr-2"
+                        title="Télécharger">
+                  <i class="fas fa-download"></i>
+                  Télécharger
+                </button>
+                <button class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-colors"
+                        title="Valider">
+                  <i class="fas fa-check-circle"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="!selectedProvider?.certifications?.length">
+              <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                Aucun document justificatif trouvé
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div *ngIf="defaultForm === DashboardScreens.SERVICES" class="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Services et Prestations</h3>
+
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Prestation</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Tarif</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Description</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let service of selectedProvider?.services || []" class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-concierge-bell text-purple-600"></i>
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">{{ service.title || 'Non spécifié' }}</div>
+                    <div class="text-sm text-gray-500">{{ service.category || 'Aucune catégorie' }}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm font-semibold text-green-600">{{ service.price || 0 }}€</div>
+                <div class="text-xs text-gray-500">par séance</div>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-700">
+                <p class="max-w-xs">{{ service.description || 'Aucune description' }}</p>
+              </td>
+
+            </tr>
+            <tr *ngIf="!selectedProvider?.services?.length">
+              <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                Aucun service enregistré
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex justify-end">
+        </div>
+      </div>
+
+
+
+    </div>
+  </main>
+</div>

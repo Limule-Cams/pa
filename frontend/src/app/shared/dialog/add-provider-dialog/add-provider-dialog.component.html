@@ -1,0 +1,157 @@
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ajouter un Prestataire</h2>
+
+<form [formGroup]="addProviderForm" (ngSubmit)="onAddNewEmployer()" class="bg-white p-6 rounded-lg shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- ID Field (auto-generated but editable) -->
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">ID Prestataire :</label>
+      <input formControlName="Id" type="text" class="input-field" placeholder="ID auto-généré (10 chiffres)" />
+      <span *ngIf="submitted && addProviderForm.get('Id')?.hasError('required')" class="text-red-500 text-xs">
+        L'identifiant est requis.
+      </span>
+      <span *ngIf="submitted && addProviderForm.get('Id')?.hasError('pattern')" class="text-red-500 text-xs">
+        Doit contenir exactement 10 chiffres.
+      </span>
+    </div>
+
+    <!-- Empty column for better layout -->
+    <div></div>
+
+    <!-- Name Fields -->
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Nom :</label>
+      <input formControlName="Name" type="text" class="input-field" placeholder="Nom du prestataire" />
+      <span *ngIf="submitted && addProviderForm.get('Name')?.hasError('required')" class="text-red-500 text-xs">
+        Le nom est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Prénom :</label>
+      <input formControlName="FName" type="text" class="input-field" placeholder="Prénom du prestataire" />
+      <span *ngIf="submitted && addProviderForm.get('FName')?.hasError('required')" class="text-red-500 text-xs">
+        Le prénom est requis.
+      </span>
+    </div>
+
+    <!-- Contact Information -->
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Email professionnel :</label>
+      <input formControlName="Mail" type="email" class="input-field" placeholder="email@professionnel.com" />
+      <span *ngIf="submitted && addProviderForm.get('Mail')?.hasError('required')" class="text-red-500 text-xs">
+        L'email est requis.
+      </span>
+      <span *ngIf="submitted && addProviderForm.get('Mail')?.hasError('email')" class="text-red-500 text-xs">
+        Veuillez entrer un email valide.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Téléphone :</label>
+      <input formControlName="Phonumber" type="tel" class="input-field" placeholder="+33 6 12 34 56 78" />
+      <span *ngIf="submitted && addProviderForm.get('Phonumber')?.hasError('required')" class="text-red-500 text-xs">
+        Le numéro de téléphone est requis.
+      </span>
+    </div>
+
+    <!-- Address -->
+    <div class="md:col-span-2">
+      <label class="block text-gray-600 font-medium mb-1">Adresse :</label>
+      <input formControlName="Adresse" type="text" class="input-field" placeholder="Adresse complète" />
+      <span *ngIf="submitted && addProviderForm.get('Adresse')?.hasError('required')" class="text-red-500 text-xs">
+        L'adresse est requise.
+      </span>
+    </div>
+
+    <!-- Type and Status -->
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Type de prestation :</label>
+      <select formControlName="Type" class="input-field">
+        <option value="">Sélectionner un type</option>
+        <option value="Thérapeute">Thérapeute</option>
+        <option value="Coach">Coach</option>
+        <option value="Formateur">Formateur</option>
+        <option value="Consultant">Consultant</option>
+        <option value="Autre">Autre</option>
+      </select>
+      <span *ngIf="submitted && addProviderForm.get('Type')?.hasError('required')" class="text-red-500 text-xs">
+        Le type de prestation est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Statut :</label>
+      <select formControlName="Status" class="input-field">
+        <option value="">Sélectionner un statut</option>
+        <option value="Validé">Validé</option>
+        <option value="En attente">En attente de validation</option>
+        <option value="Suspendu">Suspendu</option>
+      </select>
+      <span *ngIf="submitted && addProviderForm.get('Status')?.hasError('required')" class="text-red-500 text-xs">
+        Le statut est requis.
+      </span>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-4 mt-6">
+    <button type="button" (click)="onCancel()" class="btn-secondary">Annuler</button>
+    <button type="submit" class="btn-primary">Enregistrer</button>
+  </div>
+</form>
+
+<style>
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .input-field:focus {
+    border-color: #5A4A7B;
+    box-shadow: 0 0 5px rgba(90, 74, 123, 0.3);
+  }
+
+  select.input-field {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+  }
+
+  .btn-primary {
+    background-color: #5A4A7B;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #483C63;
+  }
+
+  .btn-secondary {
+    background-color: #D3D3D3;
+    color: #333;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #B0B0B0;
+  }
+
+  .text-red-500 {
+    color: #EF4444;
+  }
+
+  .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+</style>

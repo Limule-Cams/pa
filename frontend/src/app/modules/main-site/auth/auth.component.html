@@ -1,0 +1,7 @@
+<div class="w-screen h-screen">
+  @if(defaultScreen === AuthScreens.LOGIN_SCREEN) {
+    <app-login (changeScreenEvent)="onScreenChangeClick($event)"/>
+  } @else {
+    <app-register (changeScreenEvent)="onScreenChangeClick($event)"  />
+  }
+</div>

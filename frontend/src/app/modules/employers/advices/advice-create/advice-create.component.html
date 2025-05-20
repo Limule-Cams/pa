@@ -1,0 +1,91 @@
+<app-navbare></app-navbare>
+<main class="w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <div class="container mx-auto p-6">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mt-24 gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-[#5A4A7B]">
+          <i class="fas fa-edit mr-3"></i>Nouveau Conseil
+        </h1>
+        <p class="text-gray-600 mt-2">Partagez votre expertise avec vos collègues</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+      <div class="p-8">
+        <!-- Markdown Editor Container -->
+        <form [formGroup]="adviceForm" (ngSubmit)="onSubmit()" class="markdown-editor-container border border-gray-200 rounded-lg overflow-hidden">
+          <div class="bg-[#5A4A7B] text-white px-6 py-3">
+            <h2 class="font-medium">Éditeur de contenu</h2>
+          </div>
+
+          <div class="p-6">
+            <!-- Title Input -->
+            <div class="mb-6">
+              <label class="block text-gray-700 font-medium mb-2">Titre du conseil</label>
+              <input type="text" formControlName="title"
+                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8E6EBE] focus:outline-none transition"
+                     placeholder="Donnez un titre à votre conseil">
+              <div *ngIf="title?.invalid && (title?.dirty || title?.touched)" class="text-red-500 text-sm mt-1">
+                <div *ngIf="title?.errors?.['required']">Un titre est requis</div>
+                <div *ngIf="title?.errors?.['minlength']">Le titre doit faire au moins 5 caractères</div>
+              </div>
+            </div>
+
+            <!-- Markdown Editor -->
+            <div class="mb-6">
+              <label class="block text-gray-700 font-medium mb-2">Contenu</label>
+              <div class="markdown-editor border border-gray-300 rounded-lg overflow-hidden">
+                <div class="toolbar bg-gray-50 px-4 py-2 border-b flex justify-between items-center">
+                  <div class="flex space-x-2">
+                    <button type="button" class="p-2 text-gray-600 hover:text-[#5A4A7B] hover:bg-gray-100 rounded">
+                      <i class="fas fa-bold"></i>
+                    </button>
+                    <button type="button" class="p-2 text-gray-600 hover:text-[#5A4A7B] hover:bg-gray-100 rounded">
+                      <i class="fas fa-italic"></i>
+                    </button>
+                    <button type="button" class="p-2 text-gray-600 hover:text-[#5A4A7B] hover:bg-gray-100 rounded">
+                      <i class="fas fa-list-ul"></i>
+                    </button>
+                    <button type="button" class="p-2 text-gray-600 hover:text-[#5A4A7B] hover:bg-gray-100 rounded">
+                      <i class="fas fa-link"></i>
+                    </button>
+                  </div>
+                  <button type="button" (click)="togglePreview()" class="text-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition">
+                    {{ previewMode ? 'Éditer' : 'Aperçu' }}
+                  </button>
+                </div>
+
+                <div class="editor-wrapper">
+                  @if (!previewMode) {
+                    <textarea
+                      formControlName="content"
+                      class="w-full p-4 min-h-[300px] focus:outline-none"
+                      placeholder="Écrivez votre contenu en Markdown ici..."></textarea>
+                  } @else {
+                    <div class="preview-container p-4 min-h-[300px] border-t markdown-body" markdown [data]="content?.value"></div>
+                  }
+                </div>
+              </div>
+              <div *ngIf="content?.invalid && (content?.dirty || content?.touched)" class="text-red-500 text-sm mt-1">
+                <div *ngIf="content?.errors?.['required']">Le contenu est requis</div>
+                <div *ngIf="content?.errors?.['minlength']">Le contenu doit faire au moins 20 caractères</div>
+              </div>
+              <p class="text-sm text-gray-500 mt-2">Utilisez la syntaxe Markdown pour formater votre texte</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-4 pt-4 border-t">
+              <button type="button" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                Annuler
+              </button>
+              <button type="submit" class="px-6 py-2 bg-[#5A4A7B] text-white rounded-lg hover:bg-[#8E6EBE] transition flex items-center"
+                      [disabled]="adviceForm.invalid">
+                <i class="fas fa-save mr-2"></i> Publier
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,100 @@
+<div class="flex">
+  <app-side-bare></app-side-bare>
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto p-6">
+      <h2 class="text-3xl font-bold mb-6 text-[#5A4A7B]">Mon Profil</h2>
+
+      <div class="bg-white shadow-xl ring-1 ring-[#8E6EBE] ring-opacity-10 rounded-xl p-8 mb-6 border border-gray-300">
+        <h3 class="text-2xl font-semibold text-[#5A4A7B] mb-6">Mes informations</h3>
+
+        <form [formGroup]="providerProfilForm" (ngSubmit)="onSubmitProfil()">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-600">
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Nom / Nom de référence</label>
+              <input type="text" formControlName="fullName"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-[#F6F4FD] focus:ring-2 focus:ring-[#8E6EBE] focus:outline-none transition duration-300" />
+              <span *ngIf="submitted && providerProfilForm.get('fullName')?.hasError('required')"
+                    class="text-red-500 text-sm">
+                Le prénom est requis.
+              </span>
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Email professionnel</label>
+              <input
+                type="email"
+                formControlName="email"
+                class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-[#F6F4FD] focus:ring-2 focus:ring-[#8E6EBE] focus:outline-none transition duration-300"
+              />
+              <span
+                *ngIf="submitted && providerProfilForm.get('email')?.hasError('required')"
+                class="text-red-500 text-sm"
+              >
+                L'email est requis.
+              </span>
+                          <span
+                            *ngIf="submitted && providerProfilForm.get('email')?.hasError('email')"
+                            class="text-red-500 text-sm"
+                          >
+                Veuillez entrer un email valide.
+              </span>
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Numéro de téléphone</label>
+              <input type="tel" formControlName="phoneNumber"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-[#F6F4FD] focus:ring-2 focus:ring-[#8E6EBE] focus:outline-none transition duration-300" />
+              <span *ngIf="submitted && providerProfilForm.get('phonNmber')?.hasError('required')" class="text-red-500 text-sm">
+                Le numéro de téléphone est requis.
+              </span>
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">SIRET</label>
+              <input type="text" formControlName="registryNumber" readonly
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-gray-100 text-gray-500" />
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block text-gray-700 font-medium mb-2">Adresse</label>
+              <input type="text" formControlName="address"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-[#F6F4FD] focus:ring-2 focus:ring-[#8E6EBE] focus:outline-none transition duration-300" />
+              <span *ngIf="submitted && providerProfilForm.get('address')?.hasError('required')" class="text-red-500 text-sm">
+                L'adresse est requise.
+              </span>
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Type de prestation</label>
+              <input formControlName="mainActivity"
+                      class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+              <span *ngIf="submitted && providerProfilForm.get('Type')?.hasError('required')" class="text-red-500 text-sm">
+                Le type de prestation est requis.
+              </span>
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Statut</label>
+              <select formControlName="isAvailable"
+                      class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+                <option [value]="false">Inactife</option>
+                <option [value]="true">Disponible</option>
+
+              </select>
+              <span *ngIf="submitted && providerProfilForm.get('Status')?.hasError('required')" class="text-red-500 text-sm">
+                Le statut est requis.
+              </span>
+            </div>
+          </div>
+
+          <div class="flex justify-end mt-6 space-x-4">
+            <button type="submit" class="bg-[#5A4A7B] text-white px-6 py-3 rounded-lg shadow-md hover:bg-[#453a5d] transition duration-300">
+              Soumettre
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>

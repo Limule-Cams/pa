@@ -1,0 +1,22 @@
+<nav [ngClass]="{'-translate-y-full': isScrolled}" class="w-full bg-[#F8F5FF] shadow-md border-b border-gray-300 fixed top-0 left-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-3 ">
+      <img src="../../../../../assets/logo2.png" alt="Logo" class="w-30 h-20 rounded-full">
+    </div>
+
+    <ul class="hidden md:flex space-x-8 text-lg font-semibold text-[#5A4A7B]">
+      <li><a href="#" class="hover:text-pink-500 transition duration-300">Accueil</a></li>
+      <li><a href="#a-propos" class="hover:text-pink-500 transition duration-300">À propos</a></li>
+      <li><a href="#services" class="hover:text-pink-500 transition duration-300">Services</a></li>
+      <li><a href="#contact" class="hover:text-pink-500 transition duration-300">Contact</a></li>
+    </ul>
+
+    <div class="hidden md:flex space-x-4">
+
+      <button [routerLink]="['/' , 'auth']" class="px-5 py-2 text-[#9D7BC5] border-2 border-[#9D7BC5] rounded-lg shadow-lg hover:bg-[#9D7BC5] hover:text-white transition duration-300">
+        Connexion
+      </button>
+    </div>
+
+  </div>
+</nav>

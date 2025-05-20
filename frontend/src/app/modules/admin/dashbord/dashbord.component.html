@@ -1,0 +1,162 @@
+<div class="flex">
+  <app-sidebar></app-sidebar>
+
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">Tableau de bord</h1>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-primary">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-gray-500 text-sm font-medium">Sociétés clientes</p>
+            <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ companiesList().length }}</h3>
+
+          </div>
+          <div class="bg-blue-100 p-3 rounded-full">
+            <i class="fas fa-users text-green-50 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-blue-500">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-gray-500 text-sm font-medium">Salariés</p>
+            <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ employeesList().length }}</h3>
+
+          </div>
+          <div class="bg-blue-100 p-3 rounded-full">
+            <i class="fas fa-users text-blue-500 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-purple-500">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-gray-500 text-sm font-medium">Prestataires</p>
+            <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ providersList().length }}</h3>
+
+          </div>
+          <div class="bg-purple-100 p-3 rounded-full">
+            <i class="fas fa-user-tie text-purple-500 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-green-500">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-gray-500 text-sm font-medium">Événements</p>
+            <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ eventsList().length }}</h3>
+
+          </div>
+          <div class="bg-green-100 p-3 rounded-full">
+            <i class="fas fa-calendar-alt text-green-500 text-xl"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-gray-800">Top 5 Sociétés</h2>
+        <a href="admin/companies" class="text-primary hover:text-primary-dark text-sm font-medium flex items-center transition-colors">
+          Voir toutes les sociétés <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
+        </a>
+      </div>
+
+      <div class="overflow-x-auto rounded-lg border border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">ID</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Nom</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Contact</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">mail</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Salariées</th>
+
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+
+
+
+          <tr
+            *ngFor="let company of getBiggestCompanies()"
+            class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">BC-{{ company.id }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+
+                <div class="ml-4">
+                  <div class="text-sm font-medium text-gray-900">{{ company.name }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ company.phoneNumber ?? 'Non rengisné' }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ company.userEmail }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ company.employeeCount }}</td>
+
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="px-6 py-3 flex items-center justify-between border-t border-gray-200">
+        <div class="flex-1 flex justify-between sm:hidden">
+          <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Précédent
+          </a>
+          <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Suivant
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-gray-800">Événements à venir</h2>
+        <a href="admin/events" class="text-primary hover:text-primary-dark text-sm font-medium flex items-center">
+          Voir tous les événements <i class="fas fa-chevron-right ml-1 text-xs"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div
+          *ngFor="let event of getUpcomingEvents()"
+          class="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
+          <div class="flex items-center mb-4">
+            <div class="bg-gradient-to-r from-yellow-100 to-yellow-50 p-3 rounded-xl mr-4 shadow-inner">
+              <i class="fas fa-hand-holding-heart text-yellow-500 text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 group-hover:text-primary">{{ event.name }}</h3>
+              <p class="text-gray-500 text-sm flex items-center mt-1">
+                <i class="far fa-clock mr-2"></i> {{ event.startDate | date: 'dd/MM/YYYY' }}
+              </p>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">{{ event.description }}</p>
+          <div class="flex justify-between items-center">
+
+            <button
+              routerLink="/admin/event/{{ event.id }}"
+              class="text-primary hover:text-primary-dark text-sm font-medium flex items-center">
+              Détails <i class="fas fa-chevron-right ml-1 text-xs"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,142 @@
+<div class="flex">
+  <app-sidebar></app-sidebar>
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto p-6">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">Infos </h2>
+
+      <div  class="bg-[#E7E2EC] shadow-lg rounded-lg p-8 mb-6 border border-gray-200">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Informations Générales</h3>
+
+        <form [formGroup]="employerDetailsForm">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-600">
+            <div>
+              <label for="name" class="block text-gray-700 font-medium mb-2">Nom :</label>
+              <input id="name" type="text" formControlName="Name"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="last-name" class="block text-gray-700 font-medium mb-2">Prénom :</label>
+              <input id="last-name" type="text" formControlName="LastName"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="address" class="block text-gray-700 font-medium mb-2">Adresse :</label>
+              <input id="address" type="text" formControlName="Lieux"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="date" class="block text-gray-700 font-medium mb-2">Date de naissance:</label>
+              <input id="date" type="date" formControlName="BirthDate"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="PhoneNumber" class="block text-gray-700 font-medium mb-2">Contact :</label>
+              <input id="PhoneNumber" type="text" formControlName="PhoneNumber"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+
+            <div>
+              <label for="mail" class="block text-gray-700 font-medium mb-2"> mail :</label>
+              <input id="mail" type="text" formControlName="Mail"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="id" class="block text-gray-700 font-medium mb-2">Id :</label>
+              <input id="id" type="text" formControlName="Id"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="company" class="block text-gray-700 font-medium mb-2">Entreprise :</label>
+              <input id="company" type="text" formControlName="Company"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="post" class="block text-gray-700 font-medium mb-2">Post :</label>
+              <input id="post" type="text" formControlName="Post"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+
+            <div>
+              <label for="Sexe" class="block text-gray-700 font-medium mb-2">Sexe:</label>
+              <input id="Sexe" type="text" formControlName="Sexe"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+            <div>
+              <label for="status" class="block text-gray-700 font-medium mb-2">Status :</label>
+              <input id="status" type="text" formControlName="status"
+                     class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+            </div>
+
+          </div>
+          <div class="flex justify-end mt-6 space-x-4">
+            <button  type="submit" class="bg-blue-300 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+              Soumettre
+            </button>
+            <button  type="button" class="bg-red-300 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-600 transition duration-300">
+              Supprimer
+            </button>
+          </div>
+
+          @if (employerDetailsForm.dirty || !employerDetailsForm.untouched)
+          {
+            <span *ngIf="submitted && employerDetailsForm.get('Name')?.hasError('required')" class="text-red-500 text-sm">
+  Le nom est requis.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('LastName')?.hasError('required')" class="text-red-500 text-sm">
+  Le prénom est requis.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('lieux')?.hasError('required')" class="text-red-500 text-sm">
+  L'adresse est requise.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('BirthDate')?.hasError('required')" class="text-red-500 text-sm">
+  La date de naissance est requise.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('PhoneNumber')?.hasError('required')" class="text-red-500 text-sm">
+  Le contact est requis.
+</span>
+            <span *ngIf="submitted && employerDetailsForm.get('PhoneNumber')?.hasError('pattern')" class="text-red-500 text-sm">
+  Le contact doit être un numéro valide.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('Mail')?.hasError('required')" class="text-red-500 text-sm">
+  L'email est requis.
+</span>
+            <span *ngIf="submitted && employerDetailsForm.get('Mail')?.hasError('email')" class="text-red-500 text-sm">
+  L'email doit être valide.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('Id')?.hasError('required')" class="text-red-500 text-sm">
+  L'ID est requis.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('Company')?.hasError('required')" class="text-red-500 text-sm">
+  Le nom de l'entreprise est requis.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('Post')?.hasError('required')" class="text-red-500 text-sm">
+  Le poste est requis.
+</span>
+
+            <span *ngIf="submitted && employerDetailsForm.get('status')?.hasError('required')" class="text-red-500 text-sm">
+  Le statut est requis.
+</span>
+            <span *ngIf="submitted && employerDetailsForm.get('Sexe')?.hasError('required')" class="text-red-500 text-sm">
+  Le sexe est requis.
+</span>
+
+          }
+
+        </form>
+
+      </div>
+
+
+
+
+    </div>
+  </main>
+</div>

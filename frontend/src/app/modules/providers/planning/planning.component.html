@@ -1,0 +1,23 @@
+<div class="flex h-screen overflow-hidden">
+  <app-side-bare></app-side-bare>
+  <div class="flex w-full h-full overflow-hidden">
+    <div class="ml-64 w-full px-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen overflow-hidden">
+      <div class="container mx-auto p-6 h-full">
+        <div class="max-w-7xl mx-auto animate-fade-in">
+          <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+            <div>
+              <h1 class="text-3xl font-bold text-[#5A4A7B]">Gestion des RDV</h1>
+              <p class="text-gray-600 mt-2">Suivez et gérez tous vos rendez-vous ici</p>
+            </div>
+          </div>
+          <div class="h-1 w-20 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] rounded-full mb-4"></div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xl p-6 h-[85%]">
+          <full-calendar class="h-full" [options]="calendarOptions"></full-calendar>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

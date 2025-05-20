@@ -1,0 +1,49 @@
+<!-- chatbot.component.html -->
+<button
+  class="fixed bottom-6 right-6 w-14 h-14 bg-[#5A4A7B] text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg z-50 hover:bg-[#4a3a6b] transition-colors"
+  (click)="toggleChatbot()"
+>
+  <i class="fas fa-comment-dots text-xl"></i>
+</button>
+
+<div
+  class="fixed bottom-6 right-24 w-80 h-[32rem] border border-gray-200 rounded-lg flex flex-col font-sans shadow-xl z-40 transition-all duration-300 ease-in-out"
+  [class]="isOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'"
+>
+  <div class="bg-[#5A4A7B] text-white p-4 rounded-t-lg relative">
+    <h3 class="text-lg font-semibold">Assistant Virtuel</h3>
+    <button
+      class="absolute right-4 top-4 bg-transparent border-none text-white cursor-pointer text-lg"
+      (click)="toggleChatbot()"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="flex-1 p-4 overflow-y-auto bg-gray-50">
+    <div
+      *ngFor="let message of messages"
+      [class]="message.isUser
+        ? 'ml-auto bg-[#5A4A7B] text-white rounded-t-lg rounded-bl-lg mb-3 p-3 max-w-[80%]'
+        : 'mr-auto bg-gray-200 rounded-t-lg rounded-br-lg mb-3 p-3 max-w-[80%]'"
+    >
+      {{ message.text }}
+    </div>
+  </div>
+
+  <div class="p-3 border-t border-gray-200 bg-white flex">
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      (keyup.enter)="sendMessage()"
+      placeholder="Posez votre question..."
+      class="flex-1 px-3 py-2 border border-gray-300 rounded-l focus:outline-none focus:ring-1 focus:ring-[#5A4A7B]"
+    >
+    <button
+      (click)="sendMessage()"
+      class="bg-[#5A4A7B] text-white px-4 py-2 rounded-r hover:bg-[#4a3a6b] transition-colors"
+    >
+      Envoyer
+    </button>
+  </div>
+</div>

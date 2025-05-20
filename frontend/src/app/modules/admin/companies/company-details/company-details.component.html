@@ -1,0 +1,370 @@
+<div class="flex">
+  <app-sidebar></app-sidebar>
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto p-6">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">Détails de la Société</h2>
+
+      <nav class="bg-[#E7E2EC] shadow-lg rounded-lg p-4 mb-6 border border-gray-200 flex items-center justify-between">
+        <div class="flex gap-4">
+          <button (click)="onScreenChange(DashboardScreens.INFOS)" class="bg-[#5A4A7B] text-white px-5 py-2 rounded-full shadow-md hover:bg-purple-900 transition duration-300">
+            Informations Générales
+          </button>
+          <button (click)="onScreenChange(DashboardScreens.PAYMENT)" class="bg-[#5A4A7B] text-white px-5 py-2 rounded-full shadow-md hover:bg-purple-900 transition duration-300">
+            Contrats et Abonnements
+          </button>
+            <button (click)="onScreenChange(DashboardScreens.EMPLOYERS)" class="bg-[#5A4A7B] text-white px-5 py-2 rounded-full shadow-md hover:bg-purple-900 transition duration-300">
+              Salariés
+            </button>
+            <button (click)="onScreenChange(DashboardScreens.BILLS)" class="bg-[#5A4A7B] text-white px-5 py-2 rounded-full shadow-md hover:bg-purple-900 transition duration-300">
+              Paiements et Facturation
+            </button>
+        </div>
+
+        <button class="p-2 rounded-full bg-gray-300 hover:bg-gray-400 transition duration-300 shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </nav>
+
+
+
+
+        <div *ngIf="defaultForm === DashboardScreens.INFOS" class="bg-[#E7E2EC] shadow-lg rounded-lg p-8 mb-6 border border-gray-200">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Informations Générales</h3>
+
+            <form [formGroup]="companyDetailsForm" (ngSubmit)="onValidForm()">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-600">
+                    <div>
+                        <label for="company-name" class="block text-gray-700 font-medium mb-2">Nom de l’entreprise </label>
+                        <input id="company-name" type="text" formControlName="name"
+                               class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                    </div>
+                  <div>
+                    <label for="company-id" class="block text-gray-700 font-medium mb-2">ID </label>
+                    <input id="company-id" type="text" formControlName="id"
+                           class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                  </div>
+                    <div>
+                        <label for="registration-number" class="block text-gray-700 font-medium mb-2">Numéro SIRET </label>
+                        <input id="registration-number" type="text" formControlName="registryNumber"
+                               class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                    </div>
+                    <div>
+                        <label for="address" class="block text-gray-700 font-medium mb-2">Adresse du siège social </label>
+                        <input id="address" type="text" formControlName="address"
+                               class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                    </div>
+                  <div>
+                    <label for="Phone" class="block text-gray-700 font-medium mb-2">Numéro de téléphone</label>
+                    <input id="Phone" type="text" formControlName="phoneNumber"
+                           class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                  </div>
+                  <div>
+                    <label for="mail" class="block text-gray-700 font-medium mb-2">Email de contact</label>
+                    <input id="mail" type="text" formControlName="email"
+                           class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                  </div>
+                    <div>
+                        <label for="founder" class="block text-gray-700 font-medium mb-2">Nom et prénom du responsable principal</label>
+                        <input id="founder" type="text" formControlName="founder"
+                               class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                    </div>
+                    <div>
+                        <label for="employees" class="block text-gray-700 font-medium mb-2">Nombre de Salariés :</label>
+                        <input id="employees" type="text" formControlName="employeesNumber"
+                               class="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-gray-100 text-gray-500 cursor-not-allowed" />
+                    </div>
+                    <div>
+                        <label for="industry" class="block text-gray-700 font-medium mb-2">Secteur d'activité :</label>
+                        <input id="industry" type="text" formControlName="industry"
+                               class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300" />
+                    </div>
+                    <div>
+                        <label for="status" class="block text-gray-700 font-medium mb-2">Statut :</label>
+                      <select
+                        formControlName="status"
+                        id="status"
+                        class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+                        <option value="ACTIVE">Active</option>
+                        <option value="INACTIVE">Inactive</option>
+                      </select>
+                    </div>
+                    <div>
+                        <label for="taille" class="block text-gray-700 font-medium mb-2">Taille d'entreprise:</label>
+                        <select
+                                formControlName="size"
+                                id="size"
+                                class="w-full p-4 bg-[#F6F4FD] border border-transparent rounded-2xl text-[#54486B] focus:outline-none focus:ring-4 focus:ring-[#8E6EBE] transition-all duration-300 shadow-md">
+                            <option value="micro">Micro entreprise</option>
+                            <option value="small">Petite entreprise</option>
+                            <option value="medium">Entreprise moyenne</option>
+                            <option value="large">Grande entreprise</option>
+                        </select>
+                    </div>
+                </div>
+            <div class="flex justify-end mt-6 space-x-4">
+                <button
+                  (click)="onUpdateCompanyDetails()"
+                  type="button" class="bg-blue-300 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                     Soumettre
+                </button>
+                <button (click)="onDeleteCompanyClick()" type="button" class="bg-red-300 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-600 transition duration-300">
+                     Supprimer
+                </button>
+            </div>
+
+              @if (companyDetailsForm.dirty || !companyDetailsForm.untouched)
+              {
+                <span *ngIf="submitted && companyDetailsForm.get('registrationNumber')?.hasError('required')" class="text-red-500 text-sm">
+        Le numéro SIRET est requis.
+    </span>
+                <span *ngIf="submitted && companyDetailsForm.get('registrationNumber')?.hasError('pattern')" class="text-red-500 text-sm">
+        Le numéro SIRET doit contenir exactement 14 chiffres.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('companyName')?.hasError('required')" class="text-red-500 text-sm">
+        Le nom de l'entreprise est requis.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('Id')?.hasError('required')" class="text-red-500 text-sm">
+        L'ID est requis.
+    </span>
+                <span *ngIf="submitted && companyDetailsForm.get('Id')?.hasError('pattern')" class="text-red-500 text-sm">
+        L'Id doit contenir exactement 10 chiffres.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('address')?.hasError('required')" class="text-red-500 text-sm">
+        L'adresse du siège social est requise.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('Phonumber')?.hasError('required')" class="text-red-500 text-sm">
+        Le numéro de téléphone est requis.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('Email')?.hasError('required')" class="text-red-500 text-sm">
+        L'email de contact est requis.
+    </span>
+                <span *ngIf="submitted && companyDetailsForm.get('Email')?.hasError('email')" class="text-red-500 text-sm">
+        Veuillez entrer un email valide.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('founder')?.hasError('required')" class="text-red-500 text-sm">
+        Le nom du responsable principal est requis.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('industry')?.hasError('required')" class="text-red-500 text-sm">
+        Le secteur d'activité est requis.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('status')?.hasError('required')" class="text-red-500 text-sm">
+        Le statut est requis.
+    </span>
+
+                <span *ngIf="submitted && companyDetailsForm.get('taille')?.hasError('required')" class="text-red-500 text-sm">
+        La taille d'entreprise est requise.
+    </span>
+              }
+        </form>
+
+      </div>
+
+      <div *ngIf="defaultForm === DashboardScreens.PAYMENT" class="bg-white shadow-md rounded-lg p-6 border border-gray-100">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold text-gray-800">Contrats et Abonnements</h3>
+
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+          <table class="w-full">
+            <thead>
+            <tr class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Type d'abonnement</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Date de début</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Date de fin</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">État</th>
+              <th class="px-6 py-3 text-right text-xs font-medium  uppercase tracking-wider border-b">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              @if (companyDetails().contracts.length === 0) {
+                <tr>
+                  <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                    Aucun contrat en cours
+                  </td>
+                </tr>
+              } @else {
+                <tr class="hover:bg-gray-50 transition-colors" *ngFor="let contract of companyDetails().contracts">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900">{{ contract.subscriptionTier }}</div>
+                    <div class="text-xs text-gray-500">ID: #{{ contract.id || '000000' }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ contract.startDate }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ contract.endDate }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+              <span *ngIf="contract.status === 'active'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span class="w-2 h-2 mr-1.5 rounded-full bg-green-600"></span>
+                Active
+              </span>
+                    <span *ngIf="contract.status === 'inactive'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                <span class="w-2 h-2 mr-1.5 rounded-full bg-red-600"></span>
+                Inactive
+              </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button
+                      (click)="onDownloadContractClick(contract.fileUrl)"
+                      class="text-gray-600 hover:text-gray-900">Télécharger</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex justify-between items-center mt-4 text-sm text-gray-600">
+          <div>
+            Total: <span class="font-medium">{{ companyDetails().contracts.length }}</span> contrat(s)
+          </div>
+        </div>
+      </div>
+
+
+
+      <div *ngIf="defaultForm === DashboardScreens.EMPLOYERS" class="bg-white shadow-md rounded-lg p-6 border border-gray-100">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold text-gray-800">Salariés</h3>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+          <table class="w-full">
+            <thead>
+            <tr class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Prénom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Email professionnel</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Adresse</th>
+              <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider border-b">Poste</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50 transition-colors" *ngFor="let employee of companyDetails().employees">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ employee.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ employee.lastName }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ employee.id }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600">{{ employee.user.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ employee.address }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ employee.occupied_job }}</td>
+
+            </tr>
+            <tr *ngIf="companyDetails().employees.length === 0">
+              <td colspan="7" class="px-6 py-10 text-center text-gray-500">
+                Aucun salarié trouvé
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex justify-between items-center mt-4 text-sm text-gray-600">
+          <div>
+            Affichage de <span class="font-medium">{{ companyDetails().employees.length }}</span> salariés
+          </div>
+          <div class="flex items-center space-x-2">
+            <button class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50" [disabled]="true">Précédent</button>
+            <span class="px-3 py-1 rounded bg-blue-100 text-blue-600 font-medium">1</span>
+            <button class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50" [disabled]="true">Suivant</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="defaultForm === DashboardScreens.BILLS" class="bg-white shadow-md rounded-lg p-6 border border-gray-100">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold text-gray-800">Factures</h3>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+          <table class="w-full">
+            <thead>
+            <tr class="bg-gradient-to-r from-[#5A4A7B] via-purple-300 to-[#C6B5D6] text-white">
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">N° Facture</th>
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Montant</th>
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              @if (companyDetails().invoicesReceived.length === 0) {
+                <tr>
+                  <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                    Aucune facture trouvée
+                  </td>
+                </tr>
+              } @else {
+                <tr class="hover:bg-gray-50 transition-colors" *ngFor="let invoice of companyDetails().invoicesReceived; let i = index">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900">INV-{{ 2023000 + i }}</div>
+                    <div class="text-xs text-gray-500">{{ invoice.description || 'Abonnement mensuel' }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ invoice.invoiceDate }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    {{ invoice.totalAmount }} €
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <!-- Paid status -->
+                    <span *ngIf="invoice.status === 'payed'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span class="w-2 h-2 mr-1.5 rounded-full bg-green-600"></span>
+                Payée
+              </span>
+
+                    <!-- Pending status -->
+                    <span *ngIf="invoice.status === 'pending'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                <span class="w-2 h-2 mr-1.5 rounded-full bg-yellow-600"></span>
+                En attente
+              </span>
+
+                    <span *ngIf="invoice.status === 'canceled'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                <span class="w-2 h-2 mr-1.5 rounded-full bg-gray-600"></span>
+                Annulée
+              </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right">
+                    <div class="flex justify-end items-center space-x-2">
+                      <button *ngIf="invoice.status === 'En attente'" class="bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 px-3 rounded transition-colors">
+                        Payer
+                      </button>
+
+                      <!-- Download button for all invoices -->
+                      <button
+                        (click)="onDownloadContractClick(invoice.documentUrl)"
+                        class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex justify-between items-center mt-4 text-sm text-gray-600">
+          <div>
+            Total: <span class="font-medium">{{ companyDetails().invoicesReceived.length }}</span> facture(s)
+          </div>
+          <div class="flex items-center space-x-2">
+            <button class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50" [disabled]="true">Précédent</button>
+            <span class="px-3 py-1 rounded bg-indigo-100 text-indigo-600 font-medium">1</span>
+            <button class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50" [disabled]="true">Suivant</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </main>
+</div>

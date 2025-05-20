@@ -1,0 +1,69 @@
+<div class="flex">
+  <app-side-bare></app-side-bare>
+
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-semibold">👋 Bonjour <span class="text-purple-800">[{{ providesDetail().referenceName }}]</span></h1>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 mb-6">
+      <div class="bg-white p-5 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">👥 Clients ce mois</h3>
+        <p class="text-2xl font-bold text-blue-600">{{ getLastMonthBookings() }}</p>
+      </div>
+      <div class="bg-white p-5 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">📅 RDV à venir</h3>
+        <p class="text-2xl font-bold text-green-600">{{ getUpcomingBookings() }}</p>
+      </div>
+      <div class="bg-white p-5 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">💰 Paiements en attente</h3>
+        <p class="text-2xl font-bold text-red-600">{{ getPendingInvoices() }}</p>
+      </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">📅 Prochains Rendez-vous</h2>
+      <table class="w-full text-left">
+        <thead>
+        <tr class="border-b">
+          <th class="p-3">Client</th>
+          <th class="p-3">Date</th>
+          <th class="p-3">Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="providesDetail()?.bookings?.length > 0">
+          <tr *ngFor="let booking of providesDetail().bookings" class="border-b">
+            <td class="p-3">
+              {{ booking.employee?.name }} {{ booking.employee.lastName }}
+            </td>
+            <td class="p-3">
+              {{ booking.bookingDate | date:'d MMMM y':'':'fr' }}
+            </td>
+            <td class="p-3">
+            <span [ngClass]="{
+              'bg-green-100 text-green-800': booking.status === 'confirmed',
+              'bg-blue-100 text-blue-800': booking.status === 'completed',
+              'bg-red-100 text-red-800': booking.status === 'cancelled_employee' || booking.status === 'cancelled_provider',
+              'bg-yellow-100 text-yellow-800': booking.status === 'pending',
+              'bg-gray-100 text-gray-800': booking.status === 'no_show',
+              'px-3 py-1 rounded-full text-xs font-medium': true
+            }">
+            {{ getStatusText(booking.status) }}
+          </span>
+            </td>
+          </tr>
+        </ng-container>
+
+        <tr *ngIf="providesDetail()?.bookings?.length === 0" class="border-b">
+          <td colspan="3" class="p-3 text-center text-gray-500">
+            Vous avez auccun rdv enregistrer
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+

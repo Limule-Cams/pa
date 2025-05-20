@@ -1,0 +1,171 @@
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ajouter un Salarié</h2>
+
+<form [formGroup]="AddEmployerForm" (ngSubmit)="onAddNewEmployer()" class="bg-white p-6 rounded-lg shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Nom :</label>
+      <input formControlName="Name" type="text" class="input-field" placeholder="Nom du salarié" />
+      <span *ngIf="submitted && AddEmployerForm.get('Name')?.hasError('required')" class="text-red-500 text-xs">
+        Le nom est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Prénom :</label>
+      <input formControlName="LastName" type="text" class="input-field" placeholder="Prénom du salarié" />
+      <span *ngIf="submitted && AddEmployerForm.get('LastName')?.hasError('required')" class="text-red-500 text-xs">
+        Le prénom est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Date de naissance :</label>
+      <input formControlName="BirthDate" type="date" class="input-field" />
+      <span *ngIf="submitted && AddEmployerForm.get('BirthDate')?.hasError('required')" class="text-red-500 text-xs">
+        La date de naissance est requise.
+      </span>
+      <span *ngIf="submitted && AddEmployerForm.get('BirthDate')?.hasError('pattern')" class="text-red-500 text-xs">
+        Format de date invalide.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Lieu de naissance :</label>
+      <input formControlName="Lieux" type="text" class="input-field" placeholder="Lieu de naissance" />
+      <span *ngIf="submitted && AddEmployerForm.get('Lieux')?.hasError('required')" class="text-red-500 text-xs">
+        Le lieu de naissance est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Sexe :</label>
+      <select formControlName="Gender" class="input-field">
+        <option value="">Sélectionner</option>
+        <option value="Homme">Homme</option>
+        <option value="Femme">Femme</option>
+      </select>
+      <span *ngIf="submitted && AddEmployerForm.get('Sexe')?.hasError('required')" class="text-red-500 text-xs">
+        Le sexe est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">ID :</label>
+      <input formControlName="Id" type="text" class="input-field" placeholder="Identifiant du salarié" />
+      <span *ngIf="submitted && AddEmployerForm.get('Id')?.hasError('required')" class="text-red-500 text-xs">
+        L'identifiant est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Email professionnel :</label>
+      <input formControlName="Mail" type="email" class="input-field" placeholder="email@entreprise.com" />
+      <span *ngIf="submitted && AddEmployerForm.get('Mail')?.hasError('required')" class="text-red-500 text-xs">
+        L'email est requis.
+      </span>
+      <span *ngIf="submitted && AddEmployerForm.get('Mail')?.hasError('email')" class="text-red-500 text-xs">
+        Veuillez entrer un email valide.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Téléphone :</label>
+      <input formControlName="PhoneNumber" type="tel" class="input-field" placeholder="+33 6 12 34 56 78" />
+      <span *ngIf="submitted && AddEmployerForm.get('PhoneNumber')?.hasError('required')" class="text-red-500 text-xs">
+        Le numéro de téléphone est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Entreprise :</label>
+      <input formControlName="Company" type="text" class="input-field" placeholder="Nom de l'entreprise" />
+      <span *ngIf="submitted && AddEmployerForm.get('Company')?.hasError('required')" class="text-red-500 text-xs">
+        L'entreprise est requise.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Poste :</label>
+      <input formControlName="Post" type="text" class="input-field" placeholder="Poste occupé" />
+      <span *ngIf="submitted && AddEmployerForm.get('Post')?.hasError('required')" class="text-red-500 text-xs">
+        Le poste est requis.
+      </span>
+    </div>
+  </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Statut :</label>
+      <select formControlName="status" class="input-field">
+        <option value="">Sélectionner un statut</option>
+        <option value="Actif">Actif</option>
+        <option value="Inactif">Inactif</option>
+      </select>
+      <span *ngIf="submitted && AddEmployerForm.get('status')?.hasError('required')" class="text-red-500 text-xs">
+        Le statut est requis.
+      </span>
+    </div>
+
+
+
+  <div class="flex justify-end gap-4 mt-6">
+    <button type="button" (click)="onCancel()" class="btn-secondary">Annuler</button>
+    <button type="submit" class="btn-primary">Ajouter</button>
+  </div>
+</form>
+
+<style>
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .input-field:focus {
+    border-color: #5A4A7B;
+    box-shadow: 0 0 5px rgba(90, 74, 123, 0.3);
+  }
+
+  select.input-field {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+  }
+
+  .btn-primary {
+    background-color: #5A4A7B;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #483C63;
+  }
+
+  .btn-secondary {
+    background-color: #D3D3D3;
+    color: #333;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #B0B0B0;
+  }
+
+  .text-red-500 {
+    color: #EF4444;
+  }
+
+  .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+</style>

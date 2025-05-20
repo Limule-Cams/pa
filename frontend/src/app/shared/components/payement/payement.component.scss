@@ -1,0 +1,62 @@
+.payment-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.payment-form-wrapper {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-message {
+  animation: successPulse 0.5s ease-out;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// Add stripe card element styling
+:host ::ng-deep .StripeElement {
+  background-color: white;
+  height: 40px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  transition: box-shadow 150ms ease;
+  width: 100%;
+}
+
+:host ::ng-deep .StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+:host ::ng-deep .StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+:host ::ng-deep .StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}

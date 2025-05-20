@@ -1,0 +1,92 @@
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ajouter un Événement</h2>
+
+<form
+  [formGroup]="eventForm"
+  class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Name -->
+    <div class="space-y-2">
+      <label class="block text-gray-700 font-medium">Nom de l'événement<span class="text-red-500">*</span></label>
+      <input
+        formControlName="name"
+        type="text"
+        class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg transition-all duration-200 focus:border-[#5A4A7B] focus:ring-2 focus:ring-[#5A4A7B]/20 focus:bg-white"
+        placeholder="Ex: Conférence annuelle"
+        required
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="md:col-span-2 space-y-2">
+      <label class="block text-gray-700 font-medium">Description</label>
+      <textarea
+        formControlName="description"
+        class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg transition-all duration-200 focus:border-[#5A4A7B] focus:ring-2 focus:ring-[#5A4A7B]/20 focus:bg-white h-24"
+        placeholder="Décrivez l'événement..."
+      ></textarea>
+    </div>
+
+    <!-- Dates -->
+    <div class="space-y-2">
+      <label class="block text-gray-700 font-medium">Date de début<span class="text-red-500">*</span></label>
+      <input
+        formControlName="startDate"
+        type="datetime-local"
+        class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg transition-all duration-200 focus:border-[#5A4A7B] focus:ring-2 focus:ring-[#5A4A7B]/20 focus:bg-white"
+        required
+      />
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-gray-700 font-medium">Date de fin</label>
+      <input
+        formControlName="endDate"
+        type="datetime-local"
+        class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg transition-all duration-200 focus:border-[#5A4A7B] focus:ring-2 focus:ring-[#5A4A7B]/20 focus:bg-white"
+      />
+    </div>
+
+    <!-- Location -->
+    <div class="space-y-2">
+      <label class="block text-gray-700 font-medium">Lieu</label>
+      <input
+        formControlName="location"
+        type="text"
+        class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg transition-all duration-200 focus:border-[#5A4A7B] focus:ring-2 focus:ring-[#5A4A7B]/20 focus:bg-white"
+        placeholder="Ex: Centre des congrès, Paris"
+      />
+    </div>
+
+    <!-- Capacity -->
+    <div class="space-y-2">
+      <label class="block text-gray-700 font-medium">Capacité (personnes)</label>
+      <input
+        formControlName="capacity"
+        type="number"
+        min="1"
+        class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg transition-all duration-200 focus:border-[#5A4A7B] focus:ring-2 focus:ring-[#5A4A7B]/20 focus:bg-white"
+        placeholder="Ex: 150"
+      />
+    </div>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="flex justify-end gap-4 mt-8 pt-6 border-t border-gray-100">
+    <button
+
+      (click)="onClose()"
+      type="button"
+      class="px-6 py-2.5 bg-gray-100 text-gray-700 font-medium rounded-lg transition-all duration-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+    >
+      Annuler
+    </button>
+    <button
+
+      (click)="onSubmit()"
+      type="button"
+      class="px-6 py-2.5 bg-[#5A4A7B] text-white font-medium rounded-lg transition-all duration-200 hover:bg-[#483C63] focus:outline-none focus:ring-2 focus:ring-[#5A4A7B] focus:ring-offset-2"
+    >
+      Créer l'événement
+    </button>
+  </div>
+</form>

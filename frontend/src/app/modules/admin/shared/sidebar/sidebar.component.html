@@ -1,0 +1,76 @@
+<aside class="w-64 bg-gradient-to-b from-[#5A4A7B] to-[#3A2A5B] text-white h-screen p-6 fixed shadow-xl">
+  <div class="p-4 flex items-center space-x-3 mb-8 border-b border-white/10 pb-6">
+    <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center shadow-md">
+      <span class="text-lg font-bold">A</span>
+    </div>
+    <div>
+      <h2 class="text-xl font-semibold tracking-wide">Admin Panel</h2>
+      <p class="text-xs text-white/60">Administrateur</p>
+    </div>
+  </div>
+
+  <nav class="space-y-2">
+    <div class="mb-2">
+      <a href="admin/dashboard" class="flex items-center p-3 rounded-lg transition-all duration-200 hover:bg-white/10 group">
+        <div class="w-8 h-8 flex items-center justify-center bg-white/5 rounded-lg mr-3 group-hover:bg-indigo-500 transition-all">
+          📊
+        </div>
+        <span class="font-medium">Dashboard</span>
+      </a>
+    </div>
+
+    <ul class="space-y-1">
+      <li>
+        <a href="admin/companies" class="flex items-center p-3 rounded-lg transition-all duration-200 hover:bg-white/10 group">
+          <div class="w-8 h-8 flex items-center justify-center bg-white/5 rounded-lg mr-3 group-hover:bg-purple-500 transition-all">
+            🏢
+          </div>
+          <span class="font-medium">Sociétés</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="admin/employers" class="flex items-center p-3 rounded-lg transition-all duration-200 hover:bg-white/10 group">
+          <div class="w-8 h-8 flex items-center justify-center bg-white/5 rounded-lg mr-3 group-hover:bg-blue-500 transition-all">
+            👥
+          </div>
+          <span class="font-medium">Salariés</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="admin/provider" class="flex items-center p-3 rounded-lg transition-all duration-200 hover:bg-white/10 group">
+          <div class="w-8 h-8 flex items-center justify-center bg-white/5 rounded-lg mr-3 group-hover:bg-green-500 transition-all">
+            🤝
+          </div>
+          <span class="font-medium">Prestataires</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="admin/events" class="flex items-center p-3 rounded-lg transition-all duration-200 hover:bg-white/10 group">
+          <div class="w-8 h-8 flex items-center justify-center bg-white/5 rounded-lg mr-3 group-hover:bg-amber-500 transition-all">
+            📅
+          </div>
+          <span class="font-medium">Événements</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="admin/devis" class="flex items-center p-3 rounded-lg transition-all duration-200 hover:bg-white/10 group">
+          <div class="w-8 h-8 flex items-center justify-center bg-white/5 rounded-lg mr-3 group-hover:bg-amber-500 transition-all">
+            📊
+          </div>
+          <span class="font-medium">Devis</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="absolute bottom-6 left-6 right-6">
+    <a href="auth" class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:shadow-lg">
+      <i class="fas fa-sign-out-alt transform transition-transform group-hover:translate-x-1"></i>
+      <span class="font-medium">Déconnexion</span>
+    </a>
+  </div>
+</aside>

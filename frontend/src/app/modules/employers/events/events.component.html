@@ -1,0 +1,62 @@
+<app-navbare></app-navbare>
+<main class="w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <div class="container mx-auto p-4 md:p-6 max-w-7xl">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
+
+      <div *ngFor="let event of events()"
+           class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 group">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-gray-800 truncate group-hover:text-purple-700 transition-colors duration-300">
+              {{ event.name }}
+            </h3>
+            <span class="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full ml-2">
+              {{ event.capacity }} places
+            </span>
+          </div>
+
+          <div class="flex items-center text-gray-600 mb-3">
+            <div class="bg-purple-100 p-2 rounded-lg mr-3">
+              <i class="far fa-calendar-alt text-purple-600"></i>
+            </div>
+            <div>
+              <div class="font-medium text-gray-700">Dates</div>
+              <div class="text-sm">
+                {{ event.startDate | date:'mediumDate' }}
+                <span class="mx-1">→</span>
+                {{ event.endDate | date:'mediumDate' }}
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center text-gray-600 mb-4">
+            <div class="bg-purple-100 p-2 rounded-lg mr-3">
+              <i class="fas fa-map-marker-alt text-purple-600"></i>
+            </div>
+            <div>
+              <div class="font-medium text-gray-700">Location</div>
+              <div class="text-sm">{{ event.location }}</div>
+            </div>
+          </div>
+
+          <div class="relative mb-4">
+            <p class="text-gray-600 line-clamp-3 text-sm">
+              {{ event.description }}
+            </p>
+            <div class="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white to-transparent"></div>
+          </div>
+
+          <div class="flex justify-end pt-4 border-t border-gray-100">
+            <a [routerLink]="['/employer/event-details', event.id]"
+               class="text-purple-600 hover:text-purple-800 text-sm font-medium flex items-center group">
+              <span class="mr-2">View Details</span>
+              <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>

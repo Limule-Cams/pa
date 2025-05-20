@@ -1,0 +1,178 @@
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ajouter une Entreprise</h2>
+
+<form [formGroup]="addCompanyForm"  class="bg-white p-6 rounded-lg shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Nom de l'entreprise :</label>
+      <input id="company-name" type="text" formControlName="name"
+             class="input-field" placeholder="Nom de l'entreprise" />
+      <span *ngIf="submitted && addCompanyForm.get('name')?.hasError('required')" class="text-red-500 text-xs">
+        Le nom de l'entreprise est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Numéro SIRET :</label>
+      <input id="registration-number" type="text" formControlName="registryNumber"
+             class="input-field" placeholder="123 456 789 00000" />
+      <span *ngIf="submitted && addCompanyForm.get('registryNumber')?.hasError('required')" class="text-red-500 text-xs">
+        Le numéro SIRET est requis.
+      </span>
+      <span *ngIf="submitted && addCompanyForm.get('registryNumber')?.hasError('pattern')" class="text-red-500 text-xs">
+        Le numéro SIRET doit contenir exactement 14 chiffres.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Adresse du siège social :</label>
+      <input id="address" type="text" formControlName="address"
+             class="input-field" placeholder="123 rue Exemple, Paris" />
+      <span *ngIf="submitted && addCompanyForm.get('address')?.hasError('required')" class="text-red-500 text-xs">
+        L'adresse du siège social est requise.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Numéro de téléphone :</label>
+      <input id="Phone" type="text" formControlName="phoneNumber"
+             class="input-field" placeholder="06 12 34 56 78" />
+      <span *ngIf="submitted && addCompanyForm.get('phoneNumber')?.hasError('required')" class="text-red-500 text-xs">
+        Le numéro de téléphone est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Email de contact :</label>
+      <input id="mail" type="text" formControlName="email"
+             class="input-field" placeholder="contact@entreprise.com" />
+      <span *ngIf="submitted && addCompanyForm.get('email')?.hasError('required')" class="text-red-500 text-xs">
+        L'email de contact est requis.
+      </span>
+      <span *ngIf="submitted && addCompanyForm.get('email')?.hasError('email')" class="text-red-500 text-xs">
+        Veuillez entrer un email valide.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Responsable principal :</label>
+      <input id="founder" type="text" formControlName="founder"
+             class="input-field" placeholder="Nom et prénom du responsable" />
+      <span *ngIf="submitted && addCompanyForm.get('founder')?.hasError('required')" class="text-red-500 text-xs">
+        Le nom du responsable principal est requis.
+      </span>
+    </div>
+
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Secteur d'activité :</label>
+      <input id="industry" type="text" formControlName="industry"
+             class="input-field" placeholder="Informatique, Commerce, etc." />
+      <span *ngIf="submitted && addCompanyForm.get('industry')?.hasError('required')" class="text-red-500 text-xs">
+        Le secteur d'activité est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Ville :</label>
+      <input id="password" type="text" formControlName="city"
+             class="input-field" placeholder="Ville" />
+      <span *ngIf="submitted && addCompanyForm.get('city')?.hasError('required')" class="text-red-500 text-xs">
+        Mot de passe  est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Date de création :</label>
+      <input id="password" type="date" formControlName="creationDate"
+             class="input-field" placeholder="*********" />
+      <span *ngIf="submitted && addCompanyForm.get('creationDate')?.hasError('required')" class="text-red-500 text-xs">
+        Mot de passe  est requis.
+      </span>
+    </div>
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Mot de passe :</label>
+      <input id="password" type="password" formControlName="password"
+             class="input-field" placeholder="*********" />
+      <span *ngIf="submitted && addCompanyForm.get('password')?.hasError('required')" class="text-red-500 text-xs">
+        Mot de passe  est requis.
+      </span>
+    </div>
+
+
+
+    <div>
+      <label class="block text-gray-600 font-medium mb-1">Taille d'entreprise :</label>
+      <select formControlName="size" id="taille" class="input-field">
+        <option value="micro">Micro entreprise</option>
+        <option value="small">Petite entreprise</option>
+        <option value="medium">Entreprise moyenne</option>
+        <option value="large">Grande entreprise</option>
+      </select>
+      <span *ngIf="submitted && addCompanyForm.get('size')?.hasError('required')" class="text-red-500 text-xs">
+        La taille d'entreprise est requise.
+      </span>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-4 mt-6">
+    <button (click)="onCancel()" type="button" class="btn-secondary">Annuler</button>
+    <button (click)="onAddNewCompany()" type="button" class="btn-primary">Ajouter</button>  </div>
+</form>
+
+<style>
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .input-field:focus {
+    border-color: #5A4A7B;
+    box-shadow: 0 0 5px rgba(90, 74, 123, 0.3);
+  }
+
+  select.input-field {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+  }
+
+  .btn-primary {
+    background-color: #5A4A7B;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #483C63;
+  }
+
+  .btn-secondary {
+    background-color: #D3D3D3;
+    color: #333;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #B0B0B0;
+  }
+
+  .text-red-500 {
+    color: #EF4444;
+  }
+
+  .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+</style>

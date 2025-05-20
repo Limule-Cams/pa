@@ -1,0 +1,103 @@
+<app-navbare></app-navbare>
+<main class="w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <div class="container mx-auto p-6">
+
+
+
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 mt-20">
+        <div class="h-48 bg-gradient-to-r from-[#5A4A7B] to-[#8E6EBE] flex items-center justify-center text-white relative">
+          <div class="relative text-center p-6">
+            <h1 class="text-3xl font-bold mb-2">{{ selectedEvent.name }}</h1>
+            <div class="flex justify-center items-center space-x-4">
+              <span class="flex items-center">
+                <i class="far fa-calendar-alt mr-2"></i>
+                {{ selectedEvent.startDate | date : 'shortDate' }} - {{ selectedEvent.endDate | date : 'shortDate' }}
+              </span>
+              <span class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-2"></i>
+                {{ selectedEvent.location }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center space-x-4">
+              <span
+                [ngClass]="selectedEvent.isActive ? 'bg-blue-100 text-blue-800': 'bg-red-100 text-red-800'"
+                class=" px-3 py-1 rounded-full text-sm font-medium">
+                <i class="fas fa-check-circle mr-1"></i> {{ selectedEvent.isActive ? 'Confirmer' : 'Non disponible' }}
+              </span>
+              <span class="text-gray-600">
+                <i class="fas fa-users mr-1"></i> {{ getParticipants() }}/{{ selectedEvent.capacity }} participants
+              </span>
+            </div>
+            <button
+              (click)="onParticipateClick()"
+              [disabled]="isParticipated().participate"
+              [ngClass]="isParticipated().participate ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-[#5A4A7B] hover:bg-[#8E6EBE] text-white'"
+              class=" px-6 py-2 rounded-lg shadow transition flex items-center">
+              <i class="fas fa-ticket-alt mr-2"></i> {{ isParticipated().text }}
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-sm font-medium text-gray-500 uppercase mb-2">Détails</h3>
+                <ul class="space-y-3">
+                  <li class="flex">
+                    <span class="w-28 text-gray-600">Evénements :</span>
+                    <span class="font-medium">{{ selectedEvent.name }}</span>
+                  </li>
+
+                  <li class="flex">
+                    <span class="w-28 text-gray-600">Organisateur:</span>
+                    <span class="font-medium">CareSync</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-sm font-medium text-gray-500 uppercase mb-2">Horaires</h3>
+                <ul class="space-y-3">
+                  <li class="flex">
+                    <span class="w-28 text-gray-600">Début:</span>
+                    <span class="font-medium">{{ selectedEvent.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </li>
+                  <li class="flex">
+                    <span class="w-28 text-gray-600">Fin:</span>
+                    <span class="font-medium">{{ selectedEvent.endDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </li>
+                  <li class="flex">
+                    <span class="w-28 text-gray-600">Durée:</span>
+                    <span class="font-medium">{{ getDuration(selectedEvent.startDate, selectedEvent.endDate) }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-sm font-medium text-gray-500 uppercase mb-2">Localisation</h3>
+                <div class="flex items-start">
+                  <i class="fas fa-map-marker-alt text-[#5A4A7B] mt-1 mr-2"></i>
+                  {{ selectedEvent.location }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-medium text-gray-500 uppercase mb-3">Description</h3>
+            <div class="prose max-w-none text-gray-700">
+                {{ selectedEvent.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>

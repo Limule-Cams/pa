@@ -1,0 +1,55 @@
+<div class="flex">
+  <app-side-bare></app-side-bare>
+  <div class="flex">
+    <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <div class="container mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-[#5A4A7B]">Services proposés</h2>
+          <button
+            (click)="onCreateNewService()"
+            class="bg-[#5A4A7B] text-white px-6 py-2 rounded-lg shadow hover:bg-[#453a5d] transition">
+            ➕ Ajouter un service
+          </button>
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let service of providedServicesList()"
+               class="bg-white rounded-xl shadow-xl border border-gray-300 ring-1 ring-[#8E6EBE] ring-opacity-10 p-6 flex flex-col h-full">
+
+            <h3 class="text-xl font-semibold text-[#5A4A7B] mb-2">{{ service.title }}</h3>
+
+            <p class="text-gray-700 mb-2 flex-grow min-h-[60px]">{{ service.description }}</p>
+
+            <div class="mt-auto">
+              <div class="flex justify-between items-center mb-4">
+                <p class="text-sm text-gray-500">
+                  Tarif : <span class="font-semibold text-[#5A4A7B]">à partir de {{ service.price }}€</span>
+                </p>
+                <span [ngClass]="service.isAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+                      class="text-xs font-medium px-2 py-1 rounded-full">
+                {{ service.isAvailable ? 'Disponible' : 'Inactif' }}
+            </span>
+              </div>
+
+              <div class="flex justify-end space-x-2">
+                <button
+                  (click)="onUpdateService(service)"
+                  class="px-4 py-2 text-sm bg-blue-300 hover:bg-blue-600 text-white rounded-lg shadow">
+                  Modifier
+                </button>
+                <button
+                  (click)="onDeleteService(service.id)"
+                  class="px-4 py-2 text-sm bg-red-300 hover:bg-red-600 text-white rounded-lg shadow">
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+</div>

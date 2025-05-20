@@ -1,0 +1,74 @@
+<div class="flex">
+  <app-side-bare></app-side-bare>
+  <main class="ml-64 w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto p-6">
+      <div class="max-w-7xl mx-auto animate-fade-in">
+        <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+          <div>
+            <h1 class="text-3xl font-bold text-[#5A4A7B]">Gestion des Paiements</h1>
+            <p class="text-gray-600 mt-2">Suivez et gérez tous vos paiements et transactions</p>
+          </div>
+
+        </div>
+        <div class="h-1 w-20 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6] rounded-full mb-8"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+        <div class="p-1 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6]"></div>
+        <div class="p-6">
+          <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+            <h2 class="text-xl font-bold text-[#5A4A7B]">Historique des Factures</h2>
+            <div class="flex gap-2 flex-wrap">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Référence Facture</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Montant Total</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date de Facturation</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"></th>
+              </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+
+              <tr *ngFor="let payment of payments()"
+                  class="hover:bg-[#F8F5FF] transition-colors duration-150 bg-gray-50">
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ payment.invoiceNumber }}</td>
+                <td class="px-6 py-4 text-sm text-gray-500">{{ payment.description }}</td>
+                <td class="px-6 py-4 text-sm font-bold text-[#5A4A7B]">{{ payment.totalAmount }} €</td>
+                <td class="px-6 py-4 text-sm text-gray-500">{{ payment.invoiceDate }}</td>
+                <td class="px-6 py-4">
+                  <ng-container [ngSwitch]="payment.status">
+                    <span *ngSwitchCase="'pending'"
+                          class="px-2 inline-flex text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                      En attente
+                    </span>
+
+                    <span *ngSwitchCase="'payed'"
+                          class="px-2 inline-flex text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                    Payé
+                  </span>
+
+                  </ng-container>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button (click)="onDownloadContractClick(payment.documentUrl)"
+                          class="text-[#5A4A7B] hover:text-[#3D3260] transition-colors">
+                    <img class="h-10 w-10 cursor-pointer"
+                         src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg">
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

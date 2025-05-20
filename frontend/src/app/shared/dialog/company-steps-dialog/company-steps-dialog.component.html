@@ -1,0 +1,116 @@
+  <div class="p-1 bg-gradient-to-r from-[#5A4A7B] to-[#C6B5D6]"></div>
+
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-[#5A4A7B]">Configuration requise</h2>
+      <button (click)="onClose()"  class="text-gray-400 hover:text-gray-600">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Step 1 -->
+      <div class="flex items-start p-4 rounded-lg border"
+           [class.border-[#5A4A7B]]="currentStep === 1"
+           [class.border-gray-200]="currentStep !== 1">
+        <div class="flex-shrink-0 mr-4">
+          <div *ngIf="step1Completed; else step1Number" class="h-6 w-6 text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <ng-template #step1Number>
+            <div class="h-6 w-6 rounded-full bg-[#5A4A7B] text-white flex items-center justify-center">1</div>
+          </ng-template>
+        </div>
+        <div class="flex-grow">
+          <h3 class="font-medium text-gray-900">Choix d'abonnement</h3>
+          <p class="text-sm text-gray-500 mt-1">Sélectionnez le forfait adapté à votre entreprise</p>
+        </div>
+        <button (click)="onStepClick(1)" *ngIf="!step1Completed"
+                class="ml-4 text-sm text-[#5A4A7B] hover:underline whitespace-nowrap">
+          Compléter
+        </button>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="flex items-start p-4 rounded-lg border"
+           [class.border-[#5A4A7B]]="currentStep === 2"
+           [class.border-gray-200]="currentStep !== 2">
+        <div class="flex-shrink-0 mr-4">
+          <div *ngIf="step2Completed; else step2Number" class="h-6 w-6 text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <ng-template #step2Number>
+            <div class="h-6 w-6 rounded-full bg-[#5A4A7B] text-white flex items-center justify-center">2</div>
+          </ng-template>
+        </div>
+        <div class="flex-grow">
+          <h3 class="font-medium text-gray-900">Profil complet</h3>
+          <p class="text-sm text-gray-500 mt-1">Renseignez vos informations d'entreprise</p>
+        </div>
+        <button (click)="onStepClick(2)" *ngIf="!step2Completed"
+                class="ml-4 text-sm text-[#5A4A7B] hover:underline whitespace-nowrap">
+          Compléter
+        </button>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="flex items-start p-4 rounded-lg border"
+           [class.border-[#5A4A7B]]="currentStep === 3"
+           [class.border-gray-200]="currentStep !== 3">
+        <div class="flex-shrink-0 mr-4">
+          <div *ngIf="step3Completed; else step3Number" class="h-6 w-6 text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <ng-template #step3Number>
+            <div class="h-6 w-6 rounded-full bg-[#5A4A7B] text-white flex items-center justify-center">3</div>
+          </ng-template>
+        </div>
+        <div class="flex-grow">
+          <h3 class="font-medium text-gray-900">Liste des employés</h3>
+          <p class="text-sm text-gray-500 mt-1">Ajoutez vos collaborateurs</p>
+        </div>
+        <button (click)="onStepClick(3)" *ngIf="!step3Completed"
+                class="ml-4 text-sm text-[#5A4A7B] hover:underline whitespace-nowrap">
+          Compléter
+        </button>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="flex items-start p-4 rounded-lg border"
+           [class.border-[#5A4A7B]]="currentStep === 4"
+           [class.border-gray-200]="currentStep !== 4">
+        <div class="flex-shrink-0 mr-4">
+          <div *ngIf="step4Completed; else step4Number" class="h-6 w-6 text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <ng-template #step4Number>
+            <div class="h-6 w-6 rounded-full bg-[#5A4A7B] text-white flex items-center justify-center">4</div>
+          </ng-template>
+        </div>
+        <div class="flex-grow">
+          <h3 class="font-medium text-gray-900">Vérification du contrat</h3>
+          <p class="text-sm text-gray-500 mt-1">Validez les conditions générales</p>
+        </div>
+        <button (click)="onStepClick(4)" *ngIf="!step4Completed"
+                class="ml-4 text-sm text-[#5A4A7B] hover:underline whitespace-nowrap">
+          Compléter
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
+      <div class="text-sm text-gray-500">
+        {{ completedStepsCount }}/4 étapes complétées
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,64 @@
+<div class="w-screen h-screen gradient-bg flex items-center justify-center relative">
+  <div class="absolute inset-0 bg-purple-950 opacity-50"></div>
+
+  <img src="../../../../../assets/font.png" alt="Logo" class="absolute top-0 left-0 w-full h-full object-cover z-0">
+
+  <div class="container mx-auto px-6 md:px-12 lg:px-24 flex flex-col md:flex-row items-center z-10">
+
+    <div class="absolute top-6 left-52">
+      <img src="../../../../../assets/logo2.png" alt="Logo" class="h-24">
+    </div>
+
+    <div class="md:w-1/2 p-10 rounded-xl max-w-md w-full bg-opacity-80 bg-[#B5A7C0]">
+      <h2 class="text-3xl font-bold text-white">Bienvenue de retour !</h2>
+      <p class="text-gray-200 text-left mb-6">Connectez-vous à votre compte pour continuer</p>
+      <form class="space-y-6" [formGroup]="loginForm">
+        <div>
+          <label class="block text-white text-sm font-medium mb-2" for="email">Adresse Email</label>
+          <input
+            formControlName="email"
+            type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-200 text-gray-800" placeholder="EX :" required>
+        </div>
+
+        <div>
+          <label class="block text-white text-sm font-medium mb-2" for="password">Mot de passe</label>
+          <input
+            formControlName="password"
+            type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-200 text-gray-800" placeholder="EX :" required>
+        </div>
+
+        <button
+          (click)="onLoginClick()"
+          type="button" class="w-full bg-[#E91E63] text-white py-3 rounded-3xl hover:bg-[#C2185B] transition font-semibold shadow-md">
+          Suivant
+        </button>
+        @if (loginForm.dirty || !loginForm.untouched)
+        {
+          <span *ngIf="submitted && loginForm.get('email')?.hasError('required')" class="text-red-500 text-sm">
+  L'email est requis.
+</span>
+
+          <span *ngIf="submitted && loginForm.get('password')?.hasError('required')" class="text-red-500 text-sm">
+  Le mot de passe est requis.
+</span>
+
+        }
+      </form>
+
+      <p (click)="onScreenChangeClick()" class="text-gray-600 text-sm mt-6 text-center">
+        Vous n'avez pas encore de compte ?
+        <a href="javascript:void(0);" class="text-blue-600 font-semibold hover:underline ml-1">Inscrivez-vous</a>
+      </p>
+    </div>
+
+    <div class="md:w-1/2 p-32 text-center md:text-left">
+      <h1 class="text-4xl md:text-5xl font-light text-white leading-tight">
+        Inscrivez votre <br> <span class="font-bold text-pink-500">Entreprise</span>
+      </h1>
+      <p class="mt-6 text-lg text-gray-300">
+        Rejoignez notre plateforme pour gérer facilement votre entreprise, sécurisez vos bénéfices et boostez vos opérations.
+      </p>
+    </div>
+
+  </div>
+</div>

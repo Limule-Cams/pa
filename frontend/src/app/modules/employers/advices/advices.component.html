@@ -1,0 +1,50 @@
+<app-navbare></app-navbare>
+<main class="w-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <div class="container mx-auto p-6">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mt-24 gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-[#5A4A7B]">
+          <i class="fas fa-comments mr-3"></i>Espace consiels
+        </h1>
+        <p class="text-gray-600 mt-2">Échangez, partagez et interagissez avec vos collègues</p>
+      </div>
+      <button
+        [routerLink]="['/employer/advice-create']"
+        class="bg-[#5A4A7B] hover:bg-[#8E6EBE] text-white px-6 py-3 rounded-lg shadow-md transition flex items-center whitespace-nowrap">
+        <i class="fas fa-plus mr-2"></i> Nouvelle publication
+      </button>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mt-24 gap-4">
+
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+
+      <div *ngFor="let advice of advicesList()" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-100 flex flex-col">
+        <div class="h-40 bg-gradient-to-r from-purple-50 to-purple-100 flex items-center justify-center">
+          <i class="fas fa-utensils text-4xl text-[#5A4A7B]"></i>
+        </div>
+        <div class="p-6 flex-grow">
+
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            <a href="employer/advice-details" class="hover:text-[#8E6EBE] transition-colors">{{ advice.title }}</a>
+          </h3>
+          <p class="text-gray-600 text-sm mb-4 truncate">{{ advice.summary }}</p>
+          <div class="flex items-center text-gray-600 mb-4 text-sm">
+            <i class="fas fa-user-tie mr-2 text-[#5A4A7B]"></i>
+          </div>
+        </div>
+        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+          <div class="flex justify-between items-center">
+            <a [routerLink]="['/employer/advice-details', advice.id]" class="text-[#5A4A7B] hover:text-[#8E6EBE] text-sm font-medium flex items-center">
+              <i class="fas fa-eye mr-1"></i> Lire
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</main>
